@@ -36,7 +36,7 @@ export default function AppProvider({ children }) {
     }
   }, [user.uid])
   const roomHost = useFirestore('rooms', roomsHostCondition)
-  // console.log('host', roomHost)
+  console.log('host', roomHost)
 
   /// Kiểm tra phòng host
   const selectedRoomHost = React.useMemo(
