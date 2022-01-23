@@ -1,5 +1,4 @@
 .home {
-    background-color: rgba(70,23,143,1);
     width: 100%;
     height: 100vh;
     /* padding-top: 20px; */
@@ -49,12 +48,9 @@
 .home-sidebar {
     width: 100%;
     height: 100%;
-    background-color: rgba(70,23,143,1);
 }
 
 .home-sidebar-title, .home-sidebar-content {
-    background-color: #fff;
-    border-radius: 8px;
     width: 95%;
     padding: 10px;
     margin: 0 auto;
@@ -62,50 +58,41 @@
     line-height: 70px;
     margin-top: 25px;
 }
-.home-sidebar-title h3 {
-    padding-top: 10px;
-}
+ .home-sidebar-content {
+     margin-top: 0;
+ }
+
 .home-sidebar-location {
-    background-color: #FFFFFF;
-    border-radius: 8px;
+    padding: 20px 10px;
     width: 95%;
-    /* min-height: 200px; */
-    margin: 0 auto;
+    min-height: 50px;
+    margin: 15px auto;
     text-align: center;
-    margin-top: 25px;
-    padding: 10px;
+    margin-top: 15px;
+    box-shadow: 0px 0px 5px rgb(0 0 0 / 30%);
 }
 .home-sidebar-location span {
     font-size: 15px;
 }
-.vote {
+.vote_room {
     display: flex;
-    height: 25%;
     position: relative;
-    border-radius: 8px;
-    align-items: center;
     cursor: pointer;
-    min-height: 50px;
-    justify-content: flex-start;
+    margin-bottom: 15px;
+    padding: 5px 0;
 }
 
-.vote input {
-    margin-left: 10px;
+.vote_room:hover {
+    background-color: #eee;
+    border-radius: 5px;
 }
 
-.vote h4:first-child {
-    margin-top: 10px;
-}
-.vote:hover {
-    background-color: #cccccc;
-}
-
-.quantilyVote{
+.quantilyVote_room{
     border-radius:50%;
     width: 20px;
     height: 20px;
     position: absolute;
-    right:10px;
+    right: -5px;
     background-color: rgb(81, 81, 70,0.2);
     font-size:15px;
     margin-top: 10px;
@@ -114,15 +101,6 @@
     margin-left:15px;
     margin-right:40px;
     font-size: 20px;
-}
-.home-sidebar-location {
-    background-color: #FFFFFF;
-    border-radius: 8px;
-    width: 95%;
-    min-height: 50px;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 25px;
 }
 .sidebar {
     width: 25%;
@@ -194,3 +172,102 @@
 .mapBox {
     position: relative;
 }
+
+h3.titel_banner{
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.home-sidebar-title h2{
+    font-size: 28px;
+    font-weight: 700;
+}
+.home-sidebar-content h2 {
+    font-size: 24px;
+    font-weight: 500;
+}
+.vote_people{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.img_people{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+/*checkbox*/
+.custom {
+    opacity: 0;
+    position: relative;
+  }
+  .custom + label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    font-size: 14px;
+      color: #2e3553;
+  }
+  .label_vote{
+      padding-right:15px;
+  }
+  .custom[type="checkbox"] + label::before {
+    content: "";
+    width: 3em;
+    height: 1.5em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 1em;
+    border-radius: 6px;
+    background-color: transparent;
+    transition: background 300ms ease-in;
+  }
+  .custom[type="checkbox"] + label::after {
+    content: "\2713";
+    color: white;
+    position: absolute;
+    left: 7px;
+    transform: scale(0);
+    transition: all 300ms ease-in-out;
+  }
+  .custom[type="checkbox"]:checked + label::after {
+    transform: scale(1.2);
+  }
+  .custom[type="checkbox"]:checked + label::before {
+    background-color: #5850ec;
+  }
+  .custom[type="radio"] + label::before {
+    content: "";
+    width: 1.4em;
+    height: 1.4em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: all 300ms ease-in;
+  }
+  .custom[type="radio"] + label::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 7px;
+    width: 0.7em;
+    height: 0.7em;
+    background-color: white;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 300ms ease-in-out;
+  }
+  .custom[type="radio"]:checked + label::before {
+    background-color: #5850ec;
+    border: 1px solid rgba(0, 0, 0, 0);
+  }
+  .custom[type="radio"]:checked + label::after {
+    transform: scale(0.9);
+    border: 1px solid #5850ec;
+  }
+  .custom[type="radio"]{
+      display: none;
+  
+  }

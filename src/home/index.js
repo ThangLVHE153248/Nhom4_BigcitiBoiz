@@ -96,6 +96,9 @@ function Home() {
             clickRoom.update({
               member: [...member, uid]
             })
+          } else {
+            alert('Bạn đã vào phòng này rồi vui lòng kiểm tra trong mục phòng đã tham gia!')
+            return
           }
 
           setSelectedRoomId(values.content)

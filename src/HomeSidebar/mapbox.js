@@ -17,6 +17,7 @@ function Mapbox({ currRoom, params }) {
   const token = 'pk.eyJ1IjoidHJhbm5oYW4xMiIsImEiOiJja3k5cnd6M2QwOWN4MnZxbWJianJvNTgxIn0.ubgU2PdV-ahm1liOZLyjMw'
   const [newAddress, setNewAddress] = useState([])
   const { list } = useContext(AppContext)
+  // console.log(list)
 
   useEffect(() => {
     let newS = []

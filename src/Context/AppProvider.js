@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { auth } from '../firebase/config'
+import { auth, db } from '../firebase/config'
 import useFirestore from '../hooks/useFirestore'
 import { AuthContext } from './AuthProvider'
 
@@ -37,6 +37,25 @@ export default function AppProvider({ children }) {
   }, [user.uid])
   const roomHost = useFirestore('rooms', roomsHostCondition)
   console.log('host', roomHost)
+  db.collection('rooms')
+    .where('user_id', '==', '4qh5ZZkhSFVCJm2hInWNuKgNUcA3')
+    .get()
+    .then(querySnapshot => {
+      console.log(
+        querySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }))
+      )
+      // querySnapshot.forEach(doc => {
+      //   // doc.data() is never undefined for query doc snapshots
+      //   console.log(doc.id, ' => ', doc.data())
+      // })
+    })
+    .catch(error => {
+      console.log('Error getting documents: ', error)
+    })
+  // console.log(hungak)
 
   /// Kiểm tra phòng host
   const selectedRoomHost = React.useMemo(

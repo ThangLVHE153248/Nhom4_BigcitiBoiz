@@ -120,6 +120,7 @@ function MapboxLocationVote({ setShow, onClose }) {
 
   const { locationVote } = React.useContext(AppContext)
   const isAddress = () => {
+    console.log(locationVote)
     for (let i = 0; i < locationVote.length; i++) {
       if (locationVote[i] === nameAddress) {
         return true
@@ -134,10 +135,15 @@ function MapboxLocationVote({ setShow, onClose }) {
     console.log(marker.latitude)
     console.log(marker.longitude)
     console.log(nameAddress)
-    // setCurrAddName(nameAddress)
-    // console.log(curraddName)
-    // setLocationVote([])
-    setLocationVote(prev => [...prev, nameAddress])
+    console.log(locationVote.includes(nameAddress))
+    if (!locationVote.includes(nameAddress) && locationVote.length <= 4) {
+      setLocationVote(prev => [...prev, nameAddress])
+    } else if (locationVote.length > 4) {
+      alert('Bạn chỉ đc nhập tối đa 5 địa chỉ')
+    } else {
+      alert('Địa chỉ trùng lắp')
+    }
+
     onClose()
     //   }
     // }
@@ -147,7 +153,7 @@ function MapboxLocationVote({ setShow, onClose }) {
       alert('Đã tồn tại địa chỉ này')
     } else if (isAddressHome()) {
       alert('Đã tồn tại địa chỉ này')
-    }else if(locationVote.length>4){
+    } else if (locationVote.length > 4) {
       alert('Số địa điểm chỉ được tối đa 5')
     } else {
       handleSubmitLocation(e)
@@ -197,7 +203,7 @@ function MapboxLocationVote({ setShow, onClose }) {
           </div>
         </div>
       </div>
-      <button className="btnAdd" onClick={e => handleSubmitLocation2(e)}>
+      <button className="btnAdd" onClick={e => handleSubmitLocation(e)}>
         Thêm địa điểm
       </button>
     </div>
