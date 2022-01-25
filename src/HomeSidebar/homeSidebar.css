@@ -248,3 +248,8 @@ h3.titel_banner {
     color: #2e3553;
     padding: 10px;
 }
+.btnEndVote_none{
+  display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}

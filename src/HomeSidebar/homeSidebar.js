@@ -318,13 +318,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation }) => {
 
           <div className={isActive ? 'btnEndVote_none' : 'btnEndVote'}>
             {isHost?.title ? (
-              <button
-                class="btn login_btn"
-                type="submit"
-                disabled={isActive}
-                onClick={handleConfim}
-                style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-              >
+              <button class="btn login_btn" type="submit" disabled={isActive} onClick={handleConfim}>
                 <FaCalendarCheck /> {''}
                 Kết thúc
               </button>
