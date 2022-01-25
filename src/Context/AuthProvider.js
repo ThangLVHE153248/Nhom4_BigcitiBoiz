@@ -5,8 +5,6 @@ import { auth } from '../firebase/config'
 export const AuthContext = React.createContext()
 
 export default function AuthProvider({ children }) {
-  const params = useParams()
-  console.log(params.id)
   const [user, setUser] = React.useState({})
   const navigate = useNavigate()
   // const [loading, setIsLoading] = useState(true);

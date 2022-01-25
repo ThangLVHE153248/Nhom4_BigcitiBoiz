@@ -58,7 +58,7 @@ function GroupForm() {
         .required('Tiêu Đề Không Được Để Trống!'),
       content: Yup.string()
         .min(2, 'Nội Dung Phải Chứa Ít Nhất 2 Ký Tự')
-        .max(30, 'Nội Dung Tối Đa 512 Ký Tự')
+        .max(512, 'Nội Dung Tối Đa 512 Ký Tự')
         .required('Nội Dung Không Được Để Trống!')
     }),
     onSubmit: values => {
@@ -69,7 +69,8 @@ function GroupForm() {
             description: values.content,
             max_location: 5,
             vote_status: true,
-            member: [],
+            member: [uid],
+            client: [],
             user_id: uid
           })
           .then(docRef => {
@@ -94,7 +95,7 @@ function GroupForm() {
       }
     }
   })
-//Xoá địa chỉ
+  //Xoá địa chỉ
   const onDelete = value => {
     //  db.child(`location/${value}`).remove();
     console.log(locationVote)
@@ -107,7 +108,6 @@ function GroupForm() {
       }
     }
     setLocationVote([...locationVote])
-
   }
   const handleEdit = (value, index) => {
     console.log(value, index)

@@ -19,6 +19,7 @@ function LogOut() {
   const signOutUser = () => {
     auth.signOut()
     localStorage.removeItem('uid')
+    localStorage.removeItem('roomId')
     navigate('/login')
   }
 

@@ -7,12 +7,10 @@ import Geocoder from 'react-map-gl-geocoder'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import './style.css'
 import { AppContext } from '../Context/AppProvider'
-import useFirestore from '../hooks/useFirestore'
-
-
 import { useNavigate, useParams } from 'react-router-dom'
+
 function MapboxLocationVote({ setShow, onClose }) {
-  const { curraddName, setCurrAddName, setLocationVote,locationVote,currLocation } = useContext(AppContext)
+  const { curraddName, setCurrAddName, setLocationVote, locationVote, currLocation } = useContext(AppContext)
   const params = useParams()
   // Token
   var token = 'pk.eyJ1IjoiY29udG90IiwiYSI6ImNreWFvamp0dDAwbnIyb210OGdkbjUxc2oifQ.4h9mS6yDTwWeWFpHyJ_6EQ'
@@ -30,8 +28,6 @@ function MapboxLocationVote({ setShow, onClose }) {
     bearing: 0,
     pitch: 0
   })
-  
- 
 
   // Drag
   var [events, logEvents] = useState({})
@@ -62,7 +58,7 @@ function MapboxLocationVote({ setShow, onClose }) {
         console.log(error)
       })
   }, [marker, token])
- 
+
   // Zoom when search
   var geocoderContainerRef = useRef()
   var mapRef = useRef()
@@ -91,43 +87,24 @@ function MapboxLocationVote({ setShow, onClose }) {
 
   //Kiểm tra tồn tại địa chỉ chưa
 
-  const { selectedRoomHost, selectedRoomClient } = React.useContext(AppContext)
-  const conditionHostVote = React.useMemo(() => {
-    return {
-      fieldName: 'room_id',
-      operator: '==',
-      compareValue: selectedRoomHost.id
-    }
-  }, [selectedRoomHost.id])
-  const conditionClientVote = React.useMemo(() => {
-    return {
-      fieldName: 'room_id',
-      operator: '==',
-      compareValue: selectedRoomClient.id
-    }
-  }, [selectedRoomClient.id])
-  const arrLocationVoteHost = useFirestore('locations', conditionHostVote)
-  const arrLocationVoteClient = useFirestore('locations', conditionClientVote)
-
-  let listLocationVote = [...arrLocationVoteClient, ...arrLocationVoteHost]
-
-
   var handleSubmitLocation = e => {
-    
     e.preventDefault()
-    console.log(marker.latitude)
-    console.log(marker.longitude)
+    // console.log(marker.latitude)
+    // console.log(marker.longitude)
+    // console.log(nameAddress)
     console.log(locationVote.includes(nameAddress))
-    if (!locationVote.includes(nameAddress) && locationVote.length <= 4 ) {
+    if (!locationVote.includes(nameAddress) && locationVote.length <= 4) {
       setLocationVote(prev => [...prev, nameAddress])
     } else if (locationVote.length > 4) {
       alert('Bạn chỉ đc nhập tối đa 5 địa chỉ')
-    }  else {
+    } else {
       alert('Địa chỉ trùng lắp')
     }
     onClose()
   }
-  
+  //
+
+  // Return
   return (
     <div>
       <div className="container_map">

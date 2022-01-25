@@ -20,7 +20,7 @@ export default function AppProvider({ children }) {
   //// Đây là lấy ra các danh sách phòng mà người dùng là khách(client)
   const roomsClientCondition = React.useMemo(() => {
     return {
-      fieldName: 'member',
+      fieldName: 'client',
       operator: 'array-contains',
       compareValue: uid
     }

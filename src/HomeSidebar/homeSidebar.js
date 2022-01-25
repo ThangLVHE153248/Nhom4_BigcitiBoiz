@@ -252,7 +252,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation }) => {
             {listAdd.map(location => (
               <div className="vote_room" key={location.id}>
                 <input
-                  className={isActive ? 'login_btn_none' : 'custom'}
+                  className="custom"
                   type="checkbox"
                   value={location.id}
                   onClick={e => handleCheckBox(e)}
@@ -310,8 +310,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation }) => {
               show={show}
               onHide={() => setShow(false)}
               ModalTile={''}
-              // ModalChildren={<PopupForm value={`http://localhost:3000/${selectedRoomId}`} />}
-              ModalChildren={<PopupForm value={window.Headers} />}
+              ModalChildren={<PopupForm value={`http://localhost:3000/room-vote/${params.id}`} />}
               size="md"
             />
           </div>
