@@ -131,8 +131,16 @@ function Home() {
     }
   }
 
-  const handleDelete = id => {
-    console.log('Xoá btn')
+  const handleDelete = value => {
+    db.collection('rooms')
+      .doc(value)
+      .delete()
+      .then(() => {
+        alert('Xóa thành công')
+      })
+      .catch(error => {
+        console.error('Error removing document: ', error)
+      })
   }
 
   // tabs
@@ -188,7 +196,7 @@ function Home() {
               <button className="btn_address" onClick={() => handleJoinRoom(room.id)}>
                 {room.title}
               </button>
-              <button className="login_btn btn_delete" onClick={handleDelete}>
+              <button className="login_btn btn_delete" onClick={() => handleDelete(room.id)}>
                 <AiFillDelete />
               </button>
             </div>

@@ -42,7 +42,6 @@ function Mapbox({ currRoom, params, focusLocation }) {
     })
     setNewAddress(newS)
   }, [list])
-  console.log(Member)
   useEffect(() => {
     let newS = []
     Member.map(address => {
@@ -61,8 +60,6 @@ function Mapbox({ currRoom, params, focusLocation }) {
     })
     setNewMember(newS)
   }, [Member])
-
-  console.log('newMember', newMember)
 
   // Zoom location when focus location
   // const onFocusLocation = useCallback(({ longitude, latitude }) => {

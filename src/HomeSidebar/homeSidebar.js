@@ -134,6 +134,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
   }, [setActive])
 
   const arrLocationVoteHost = useFirestore('locations', conditionVote)
+  console.log(arrLocationVoteHost)
 
   React.useMemo(() => {
     let listLocationVote = [...arrLocationVoteHost]
@@ -143,6 +144,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
 
   const handleGoBack = () => {
     navigate('/')
+    setSelectedRoomId('')
     //delete all data room_id, user_room...
   }
 
@@ -170,7 +172,8 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
     }
   }, [params.id])
 
-  // const listMember = useFirestore('user_room', usersCondition)
+  const listCurrAdđ = useFirestore('user_room', usersCondition)
+  console.log(listCurrAdđ)
   //// Đây là user chứa địa chỉ lúc đầu người dùng nhập
   React.useCallback(() => {
     setCurrRoom(valueRoom)
