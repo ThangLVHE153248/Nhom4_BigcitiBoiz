@@ -142,6 +142,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
 
   const handleGoBack = () => {
     navigate('/')
+    setSelectedRoomId('')
     //delete all data room_id, user_room...
   }
 
@@ -325,7 +326,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
               show={show}
               onHide={() => setShow(false)}
               ModalTile={''}
-              ModalChildren={<PopupForm value={`http://localhost:3000/room-vote/${params.id}`} />}
+              ModalChildren={<PopupForm value={`https://cungdichoi-772c1.web.app/room-vote/${params.id}`} />}
               size="md"
             />
           </div>
