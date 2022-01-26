@@ -151,10 +151,11 @@ function Home() {
       label: 'Chung',
       content: (
         <div className="tab-content">
-          <h1 className="home_title">Cuộc bình chọn đi chơi chất lượng. Giờ đây miễn phí cho tất cả mọi người.</h1>
+          <h1 className="home_title">Chọn lựa nơi đi chơi thật nhanh chóng và tiện lợi.</h1>
           <div className="span_title">
-            Chúng tôi đã thiết kế lại App Cùng Đi Chơi — dịch vụ tổ chức cuộc bình chọn với độ bảo mật cao — để cung cấp
-            miễn phí cho mọi người.
+            <div>Có quá nhiều lựa chọn? Các bạn đang tranh cãi để tìm ra địa điểm vui chơi lý tưởng?</div>
+            Việc thống nhất địa điểm cho những cuộc vui giờ đây không còn là vấn đề. Cungdichoi cung cấp nền tảng để tổ
+            chức các cuộc bầu chọn thật dễ dàng.
           </div>
           <div className="home_left">
             <div className="home_item">

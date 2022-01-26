@@ -8,10 +8,9 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import './style.css'
 import { AppContext } from '../Context/AppProvider'
 import { db } from '../firebase/config'
-
 import { useNavigate, useParams } from 'react-router-dom'
 function MapboxLocationVote({ setShow, onClose }) {
-  const {  setLocationVote,locationVote } = useContext(AppContext)
+  const { setLocationVote, locationVote } = useContext(AppContext)
   const params = useParams()
   // Token
   var token = 'pk.eyJ1IjoiY29udG90IiwiYSI6ImNreWFvamp0dDAwbnIyb210OGdkbjUxc2oifQ.4h9mS6yDTwWeWFpHyJ_6EQ'
@@ -29,8 +28,6 @@ function MapboxLocationVote({ setShow, onClose }) {
     bearing: 0,
     pitch: 0
   })
-  
- 
 
   // Drag
   var [events, logEvents] = useState({})
@@ -61,7 +58,7 @@ function MapboxLocationVote({ setShow, onClose }) {
         console.log(error)
       })
   }, [marker, token])
- 
+
   // Zoom when search
   var geocoderContainerRef = useRef()
   var mapRef = useRef()
@@ -90,24 +87,21 @@ function MapboxLocationVote({ setShow, onClose }) {
 
   //Kiểm tra tồn tại địa chỉ chưa
 
-  
-
-  const  [locationVoteHome, setlocationVoteHome] = useState([])
+  const [locationVoteHome, setlocationVoteHome] = useState([])
   React.useEffect(() => {
-    db.collection("locations").where("room_id","==",params.id).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
+    db.collection('locations')
+      .where('room_id', '==', params.id)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
           // console.log(doc.data())
-          const data =doc.data().location
-          setlocationVoteHome(prev => [...prev,data ])
-          
-      });
-    }); 
+          const data = doc.data().location
+          setlocationVoteHome(prev => [...prev, data])
+        })
+      })
   }, [])
 
-
-
   var handleSubmitLocation = e => {
-    
     e.preventDefault()
     console.log(marker.latitude)
     console.log(marker.longitude)
@@ -116,16 +110,16 @@ function MapboxLocationVote({ setShow, onClose }) {
     if (!locationVoteHome.includes(nameAddress) && locationVoteHome.length <= 4) {
       setLocationVote(prev => [...prev, nameAddress])
     } else if (locationVoteHome.length > 4) {
-      alert('Bạn chỉ đc nhập tối đa 5 địa chỉ trong home')
+      alert('Bạn chỉ được nhập tối đa 5 địa điểm để bình chọn !')
     } else {
-      alert('Địa chỉ trùng lắp')
+      alert('Địa chỉ trùng lặp !')
     }
 
     onClose()
     //   }
     // }
   }
- 
+
   return (
     <div>
       <div className="container_map">

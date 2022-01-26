@@ -6,18 +6,17 @@ import PopupForm from '../components/PopupForm'
 import { AppContext } from '../Context/AppProvider'
 import useFirestore from '../hooks/useFirestore'
 import { addDocument } from '../firebase/services'
-import { AuthContext } from '../Context/AuthProvider'
 import { db } from '../firebase/config'
 import MapboxLocationVote from './mapboxLocationVote'
-import { query, orderBy, where, limit } from 'firebase/firestore'
 import useGetDataFirebase from '../hooks/useGetDataFirebase'
 import { FaShareAlt, FaCalendarCheck } from 'react-icons/fa'
 import { BsArrowReturnLeft } from 'react-icons/bs'
 import { SiGooglemaps } from 'react-icons/si'
+import { FaCrown } from 'react-icons/fa'
 
 const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
   const navigate = useNavigate()
-  const { locationVote, setLocationVote, selectedRoomId, setList, setSelectedRoomId, roomClient } =
+  const { locationVote, setLocationVote, selectedRoomId, setList, setSelectedRoomId, setMember } =
     React.useContext(AppContext)
   const params = useParams()
 
@@ -172,8 +171,8 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
     }
   }, [params.id])
 
-  const listCurrAdđ = useFirestore('user_room', usersCondition)
-  console.log(listCurrAdđ)
+  const newListMember = useFirestore('user_room', usersCondition)
+  setMember(newListMember)
   //// Đây là user chứa địa chỉ lúc đầu người dùng nhập
   React.useCallback(() => {
     setCurrRoom(valueRoom)
@@ -200,8 +199,8 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
       })
   }
 
-  const handleConfim = e => {
-    if (window.confirm('Bạn có muốn kết thúc bình chọn')) {
+  const handleConfirm = e => {
+    if (window.confirm('Bạn có muốn kết thúc bình chọn không ?')) {
       handleEndVote(e)
     }
   }
@@ -247,26 +246,32 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
     <>
       <div className="home">
         <div className="home-sidebar">
+          <h3 className="title">Tiêu đề cuộc bình chọn</h3>
           <div className="home-sidebar-title">
             {/* <h2>{selectedRoomHost.title ? selectedRoomHost.title : selectedRoomClient.title}</h2> */}
-            <h2>{valueRoom.title}</h2>
+            <h3>{valueRoom.title}</h3>
           </div>
+          <h3 className="title">Nội dung cuộc bình chọn</h3>
           <div className="home-sidebar-content">
             {/* <h2>{selectedRoomHost.description ? selectedRoomHost.description : selectedRoomClient.description}</h2> */}
             <h2>{valueRoom.description}</h2>
           </div>
 
           <div className={isActive ? 'home-sidebar-location' : 'contendisable'}>
-            <h3 className="titel_banner">Địa điểm được chọn nhiều nhất</h3>
+            <h3 className="title" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+              <FaCrown />
+              {''}
+              <span style={{ marginLeft: '10px', fontSize: '25px' }}>Địa điểm được chọn nhiều nhất</span>
+            </h3>
             <h5 className="addressVote">{voteWin.location}</h5>
           </div>
 
-          <h3 className="titel_banner">Danh Sách Địa Chỉ Bình Chọn</h3>
+          <h3 className="title_banner">Danh Sách Địa Chỉ Bình Chọn</h3>
           <div className="home-sidebar-location">
             {listAdd.map(location => (
               <div className="vote_room" key={location.id}>
                 <input
-                  className={isActive ? 'login_btn_none' : 'custom'}
+                  className="custom"
                   type="checkbox"
                   value={location.id}
                   onClick={e => handleCheckBox(e)}
@@ -284,7 +289,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
             ))}
           </div>
 
-          <h3 className="titel_banner">Danh Sách Người Tham Gia</h3>
+          <h3 className="title_banner">Danh Sách Người Tham Gia</h3>
           <div className="home-sidebar-location">
             {listMember?.map(member => (
               <div className="vote_people" key={member.uid}>
@@ -324,8 +329,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
               show={show}
               onHide={() => setShow(false)}
               ModalTile={''}
-              // ModalChildren={<PopupForm value={`http://localhost:3000/${selectedRoomId}`} />}
-              ModalChildren={<PopupForm value={window.Headers} />}
+              ModalChildren={<PopupForm value={`http://localhost:3000/room-vote/${params.id}`} />}
               size="md"
             />
           </div>
@@ -336,7 +340,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
                 class="btn login_btn"
                 type="submit"
                 disabled={isActive}
-                onClick={handleConfim}
+                onClick={handleConfirm}
                 style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
               >
                 <FaCalendarCheck /> {''}

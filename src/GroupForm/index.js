@@ -58,7 +58,7 @@ function GroupForm() {
         .required('Tiêu Đề Không Được Để Trống!'),
       content: Yup.string()
         .min(2, 'Nội Dung Phải Chứa Ít Nhất 2 Ký Tự')
-        .max(30, 'Nội Dung Tối Đa 512 Ký Tự')
+        .max(512, 'Nội Dung Tối Đa 512 Ký Tự')
         .required('Nội Dung Không Được Để Trống!')
     }),
     onSubmit: values => {
