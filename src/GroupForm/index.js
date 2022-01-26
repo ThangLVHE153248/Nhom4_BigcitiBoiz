@@ -15,6 +15,8 @@ import AppProvider, { AppContext } from '../Context/AppProvider'
 import { addDocument } from '../firebase/services'
 import MapboxLocationVote from '../MapAddAddress/mapboxLocationVote'
 import LogOut from '../components/LogOut'
+import { AiFillDelete } from 'react-icons/ai'
+import { BsArrowReturnLeft, BsArrowReturnRight } from 'react-icons/bs'
 
 function GroupForm() {
   const {
@@ -29,7 +31,6 @@ function GroupForm() {
   const [index, SetIndex] = useState('')
 
   const [nameAddress, SetnameAddress] = useState('')
-
 
   const handleGoBack = () => {
     navigate('/contact')
@@ -57,7 +58,7 @@ function GroupForm() {
         .required('Tiêu Đề Không Được Để Trống!'),
       content: Yup.string()
         .min(2, 'Nội Dung Phải Chứa Ít Nhất 2 Ký Tự')
-        .max(30, 'Nội Dung Tối Đa 512 Ký Tự')
+        .max(512, 'Nội Dung Tối Đa 512 Ký Tự')
         .required('Nội Dung Không Được Để Trống!')
     }),
     onSubmit: values => {
@@ -68,7 +69,8 @@ function GroupForm() {
             description: values.content,
             max_location: 5,
             vote_status: true,
-            member: [],
+            member: [uid],
+            client: [],
             user_id: uid
           })
           .then(docRef => {
@@ -93,7 +95,7 @@ function GroupForm() {
       }
     }
   })
-
+//Xoá địa chỉ
   const onDelete = value => {
     //  db.child(`location/${value}`).remove();
     console.log(locationVote)
@@ -107,16 +109,6 @@ function GroupForm() {
     }
     setLocationVote([...locationVote])
 
-    // const deleteAddress = firebase.database().ref('user_room').child(locationVote.id)
-    // const item = locationVote.pop();
-    // console.log(locationVote)
-    // setLocationVote(item =>[...item])
-
-    // deleteAddress.remove()
-    // locationVote.remove()
-    // setLocationVote(locationVote)
-    // setShow(false);
-    // console.log(deleteAddress)
   }
   const handleEdit = (value, index) => {
     console.log(value, index)
@@ -150,7 +142,7 @@ function GroupForm() {
                       <InputForm
                         type="text"
                         id="Text1"
-                        placeholder="Tiêu đề *"
+                        placeholder="Tiêu Đề *"
                         name="label"
                         defaultValue={formik.values.label}
                         onChange={formik.handleChange}
@@ -164,7 +156,7 @@ function GroupForm() {
                       <InputForm
                         type="text"
                         id="Text2"
-                        placeholder="Nội dung *"
+                        placeholder="Nội Dung *"
                         name="content"
                         defaultValue={formik.values.content}
                         onChange={formik.handleChange}
@@ -191,19 +183,17 @@ function GroupForm() {
 
                   <div className="address_vote">
                     {locationVote.map((value, index) => (
-                      <div className="location_adrress" key={index}>
+                      <div className="list_room" key={index}>
                         <button type="button" className="btn_address" onClick={() => handleEdit(value, index)}>
                           {value}
                         </button>
-                        <button type="button" onClick={() => onDelete(`${value}`)} className="btn_delete_address">
-                          {' '}
-                          <span className="icon_delete">X</span>{' '}
+                        <button className="login_btn btn_delete" type="button" onClick={() => onDelete(`${value}`)}>
+                          <AiFillDelete />
                         </button>
                       </div>
                     ))}
 
                     <ModalForm
-                      
                       show={show}
                       onHide={() => setShow(false)}
                       ModalTile={''}
@@ -214,6 +204,7 @@ function GroupForm() {
 
                   <div className="login_btn_wrapper" style={{ marginTop: '50px' }}>
                     <button type="submit" onClick={e => handleGoBack(e)} className="btn login_btn">
+                      <BsArrowReturnLeft /> {''}
                       Trở Về
                     </button>
                     <button
@@ -221,7 +212,8 @@ function GroupForm() {
                       className="btn login_btn"
                       disabled={!(formik.isValid && formik.dirty && locationVote.length != 0)}
                     >
-                      TẠO PHÒNG BÌNH CHỌN
+                      <BsArrowReturnRight /> {''}
+                      Tạo Phòng Bình Chọn
                     </button>
                   </div>
                 </div>

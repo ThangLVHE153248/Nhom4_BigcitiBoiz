@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
+import { AppContext } from '../Context/AppProvider'
 import firebase, { auth } from '../firebase/config'
 import { addDocument } from '../firebase/services'
 import './styles.css'
@@ -9,11 +10,14 @@ const fbProvider = new firebase.auth.FacebookAuthProvider()
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 
 function LoginSocial({ setIsAuth }) {
+  const roomId = localStorage.getItem('roomId')
+  console.log(roomId)
   const navigate = useNavigate()
 
   const handleLogin = async provider => {
     const { additionalUserInfo, user } = await auth.signInWithPopup(provider)
-    navigate('/')
+    roomId ? navigate(`/room-vote/${roomId}`) : navigate('/')
+    // localStorage.removeItem('roomId')
 
     if (additionalUserInfo?.isNewUser && user) {
       addDocument('users', {
