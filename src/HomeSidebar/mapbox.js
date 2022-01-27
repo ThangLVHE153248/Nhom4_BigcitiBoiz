@@ -10,8 +10,22 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { GeoJsonLayer } from '@deck.gl/layers'
 import './homeSidebar.css'
 import { FaMapMarkerAlt } from 'react-icons/fa'
+import useFirestore from '../hooks/useFirestore'
+import { useParams } from 'react-router-dom'
 
 function Mapbox({ focusLocation }) {
+  const params = useParams()
+  /// Lấy ra danh sách địa điểm vote
+  const conditionVote = React.useMemo(() => {
+    return {
+      fieldName: 'room_id',
+      operator: '==',
+      compareValue: params.id
+    }
+  }, [params.id])
+
+  const arrLocationVoteHost = useFirestore('locations', conditionVote)
+
   const [viewport, setViewport] = useState({
     width: '75vw',
     height: '100vh',
@@ -24,8 +38,10 @@ function Mapbox({ focusLocation }) {
   const [newAddress, setNewAddress] = useState([])
   const [newMember, setNewMember] = useState([])
   const [userCoord, setUserCoord] = useState('')
+  const [locationUser, setLocationUser] = useState()
   const [focusLocationCoord, setFocusLocationCoord] = useState('')
   const { list, Member } = useContext(AppContext)
+
   const {
     user: { uid }
   } = React.useContext(AuthContext)
@@ -37,79 +53,90 @@ function Mapbox({ focusLocation }) {
   var center = [lon, lat]
   var circle = turf.circle(center, radius)
   // Get coordinates of user
-  useEffect(() => {
-    Member.map(userItem => {
-      if (userItem.user_id === uid) {
-        // setUserCoord(`${userItem.longitude},${userItem.latitude}`)
-        axios
-          .get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${userItem.currentLocation}.json?access_token=${token}`
-          )
-          .then(function (response) {
-            const newUserCoord = `${response.data.features[0].center[0]},${response.data.features[0].center[1]}`
-            setUserCoord(newUserCoord)
-            console.log(userCoord)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      }
-    })
-  }, [Member, uid])
+  // useEffect(() => {
+  //   Member.map(userItem => {
+  //     if (userItem.user_id === uid) {
+  //       // setUserCoord(`${userItem.longitude},${userItem.latitude}`)
+  //       axios
+  //         .get(
+  //           `https://api.mapbox.com/geocoding/v5/mapbox.places/${userItem.currentLocation}.json?access_token=${token}`
+  //         )
+  //         .then(function (response) {
+  //           const newUserCoord = `${response.data.features[0].center[0]},${response.data.features[0].center[1]}`
+  //           setUserCoord(newUserCoord)
+  //           console.log(userCoord)
+  //         })
+  //         .catch(function (error) {
+  //           console.log(error)
+  //         })
+  //     }
+  //   })
+  // }, [Member, uid])
 
   useEffect(() => {
-    setTimeout(() => {
-      let newS = []
-      list.map(address => {
+    let newS = []
+    Member.forEach(address => {
+      setTimeout(() => {
         axios
-          .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address.location}.json?access_token=${token}`)
+          .get(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${address.currentLocation}.json?access_token=${token}`
+          )
           .then(function (response) {
             newS.push({
               ...address,
               longitude: response.data.features[0].center[0],
               latitude: response.data.features[0].center[1]
             })
+            setNewMember([...newS])
           })
           .catch(function (error) {
             console.log(error)
           })
       })
-      setNewAddress(newS)
     }, 500)
-  }, [list])
-  console.log(newAddress)
-
+  }, [Member])
   useEffect(() => {
-    let newS = []
-    Member.map(address => {
+    let newSs = []
+    list.forEach(address => {
       axios
-        .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address.currentLocation}.json?access_token=${token}`)
+        .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address.location}.json?access_token=${token}`)
         .then(function (response) {
-          newS.push({
+          newSs.push({
             ...address,
             longitude: response.data.features[0].center[0],
             latitude: response.data.features[0].center[1]
           })
+
+          setNewAddress([...newSs])
+
+          // setNewAddress(prev => [...prev, 'ok'])
         })
         .catch(function (error) {
           console.log(error)
         })
     })
-    setNewMember(newS)
-  }, [Member])
+  }, [list, setNewAddress])
+
+  React.useEffect(() => {
+    const findLocationUser = newMember.find(value => value.user_id === uid)
+    setLocationUser(findLocationUser)
+  }, [uid, newMember])
 
   // Convert location from name to coordinates
-  const convertLocationName = useCallback(nameLocation => {
-    axios
-      .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${nameLocation}.json?access_token=${token}`)
-      .then(function (response) {
-        const newCoordFocusLocation = `105.7772149,21.0164909;${response.data.features[0].center[0]},${response.data.features[0].center[1]}`
-        setFocusLocationCoord(newCoordFocusLocation)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  }, [])
+  const convertLocationName = useCallback(
+    nameLocation => {
+      axios
+        .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${nameLocation}.json?access_token=${token}`)
+        .then(function (response) {
+          const newCoordFocusLocation = `${locationUser?.longitude},${locationUser?.latitude};${response.data.features[0].center[0]},${response.data.features[0].center[1]}`
+          setFocusLocationCoord(newCoordFocusLocation)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    [locationUser]
+  )
 
   // Display route from user to entertainment venues
   useEffect(() => {
@@ -185,7 +212,7 @@ function Mapbox({ focusLocation }) {
             // setTimeout(() => {
             newAddress.map((val, index) => {
               return (
-                <Marker latitude={val.latitude} longitude={val.longitude} offsetLeft={-10} offsetTop={-28}>
+                <Marker key={index} latitude={val.latitude} longitude={val.longitude} offsetLeft={-10} offsetTop={-28}>
                   <div>
                     <FaMapMarkerAlt className="marker marker_location" />
                   </div>
@@ -194,9 +221,11 @@ function Mapbox({ focusLocation }) {
             })
             // }, 1000)
           }
+
+          {/* Đây là địa chỉ hiện tại của ngườu dùng */}
           {newMember.map((val, index) => {
             return (
-              <Marker latitude={val.latitude} longitude={val.longitude} offsetLeft={-10} offsetTop={-28}>
+              <Marker key={index} latitude={val.latitude} longitude={val.longitude} offsetLeft={-10} offsetTop={-28}>
                 <div>
                   <FaMapMarkerAlt className="marker marker_user" />
                 </div>

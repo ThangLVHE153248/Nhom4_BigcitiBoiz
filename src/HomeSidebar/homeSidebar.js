@@ -82,7 +82,6 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
       .then(doc => {
         if (doc.exists) {
           setValueRoom(doc.data())
-          console.log(doc.data())
           if (doc.data().member.includes(uid) || selectedRoomId) {
             return
           } else if (!uid) {
@@ -133,6 +132,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
   }, [setActive])
 
   const arrLocationVoteHost = useFirestore('locations', conditionVote)
+  // console.log(arrLocationVoteHost)
 
   React.useMemo(() => {
     let listLocationVote = [...arrLocationVoteHost]
@@ -199,7 +199,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
   }
 
   const handleConfirm = e => {
-    if (window.confirm("Bạn có muốn kết thúc bình chọn không ?")) {
+    if (window.confirm('Bạn có muốn kết thúc bình chọn không ?')) {
       handleEndVote(e)
     }
   }
@@ -229,7 +229,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
           }
         })
       })
-      .then(() => { })
+      .then(() => {})
       .catch(error => {
         console.log('Transaction failed: ', error)
       })
@@ -256,10 +256,12 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
             <h2>{valueRoom.description}</h2>
           </div>
 
-
           <div className={isActive ? 'home-sidebar-location' : 'contendisable'}>
-            <h3 className="title" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}><FaCrown />{""}
-              <span style={{ marginLeft: '10px', fontSize: '25px' }}>Địa điểm được chọn nhiều nhất</span></h3>
+            <h3 className="title" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+              <FaCrown />
+              {''}
+              <span style={{ marginLeft: '10px', fontSize: '25px' }}>Địa điểm được chọn nhiều nhất</span>
+            </h3>
             <h5 className="addressVote">{voteWin.location}</h5>
           </div>
 
