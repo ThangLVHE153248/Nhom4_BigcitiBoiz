@@ -374,7 +374,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember,focusLocation }
                 onClick={handleConfirm}
                 style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
               >
-                <FaCalendarCheck /> {''}
+                <FaCalendarCheck style={{ marginRight: '5px' }} />
                 Kết thúc
               </button>
             ) : (
