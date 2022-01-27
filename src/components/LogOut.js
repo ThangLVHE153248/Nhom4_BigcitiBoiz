@@ -4,6 +4,7 @@ import { useOutsideClick } from './useOutsideClick'
 import { AuthContext } from '../Context/AuthProvider'
 import firebase, { auth } from '../firebase/config'
 import { useNavigate } from 'react-router-dom'
+import { IoIosLogOut } from 'react-icons/io'
 
 function LogOut() {
   const navigate = useNavigate()
@@ -18,6 +19,7 @@ function LogOut() {
   const signOutUser = () => {
     auth.signOut()
     localStorage.removeItem('uid')
+    localStorage.removeItem('roomId')
     navigate('/login')
   }
 
@@ -30,7 +32,9 @@ function LogOut() {
       <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
         <ul>
           <li>
-            <button onClick={signOutUser}>Đăng Xuất</button>
+            <button onClick={signOutUser}>
+              <IoIosLogOut /> Đăng Xuất
+            </button>
           </li>
         </ul>
       </nav>

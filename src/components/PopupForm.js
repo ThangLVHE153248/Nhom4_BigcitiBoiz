@@ -9,6 +9,7 @@ function PopupForm({ value }) {
     el.select()
     document.execCommand('copy')
     document.body.removeChild(el)
+    alert('Đã copy')
   }
   return (
     <div className="text-center">

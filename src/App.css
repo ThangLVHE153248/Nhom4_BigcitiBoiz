@@ -10,14 +10,14 @@
 
 .login_wrapper a.btn,
 .login_btn {
-  color: rgb(70, 23, 143);
+  color: #782c81;
   height: 50px;
-  padding: 6px 25px;
+  padding: 5px 15px;
   line-height: 36px;
   border-radius: 5px;
   background: #fff;
   font-size: 16px;
-  border: 1px solid rgb(70, 23, 143);
+  border: 1px solid #782c81;
   text-decoration: none;
   outline: none;
 }
@@ -25,7 +25,7 @@
 .login_btn_wrapper a.btn:hover,
 .login_btn:hover {
   color: #fff;
-  background: rgb(70, 23, 143);
+  background: #782c81;
 }
 
 .login_wrapper a.google-plus {
@@ -109,9 +109,9 @@ button.btn_address {
   padding: 6px 25px;
   line-height: 36px;
   border-radius: 5px;
-  background: rgb(70, 23, 143);
+  background: #9737a2;
   font-size: 16px;
-  border: 1px solid rgb(70, 23, 143);
+  border: 1px solid #9737a2;
   text-decoration: none;
   outline: none;
 }
@@ -122,9 +122,9 @@ button.btn_address {
   padding: 6px 25px;
   line-height: 36px;
   border-radius: 5px;
-  background: rgb(70, 23, 143);
+  background: #782c81;
   font-size: 16px;
-  border: 1px solid rgb(70, 23, 143);
+  border: 1px solid #782c81;
   text-decoration: none;
   outline: none;
   cursor: pointer;
@@ -189,3 +189,10 @@ button.btn_address {
   }
 }   
 /* end login Form */
+
+input::-webkit-input-placeholder { 
+  font-family: sans-serif;
+}
+button {
+  box-shadow: none;
+}

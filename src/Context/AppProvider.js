@@ -11,6 +11,7 @@ export default function AppProvider({ children }) {
   const [list, setList] = useState([])
   const [currLocation, setCurrLocation] = useState('')
   const [nickname, setNickName] = useState('')
+  const [Member, setMember] = useState([])
 
   const {
     user: { uid }
@@ -19,7 +20,7 @@ export default function AppProvider({ children }) {
   //// Đây là lấy ra các danh sách phòng mà người dùng là khách(client)
   const roomsClientCondition = React.useMemo(() => {
     return {
-      fieldName: 'member',
+      fieldName: 'client',
       operator: 'array-contains',
       compareValue: uid
     }
@@ -67,7 +68,9 @@ export default function AppProvider({ children }) {
         currLocation,
         setCurrLocation,
         nickname,
-        setNickName
+        setNickName,
+        Member,
+        setMember
       }}
     >
       {children}

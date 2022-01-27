@@ -8,18 +8,17 @@
     display: flex;
 }
 .home_item button.btn_add:hover  {
-    background-color:rgb(70, 23, 143);
+    background-color:#5c1864;
 }
 .home_item:hover button span {
     color: #fff;
 }
 .home_item .btn_add{
-    background-color: #fff;
     border: none;
     margin: 0 auto;
     padding: 10px;
     border-radius: 8px;
-    background-color: #1a73e8;
+    background-color: #782c81;
     flex: 1;
     margin-right: 15px;
 }
@@ -86,7 +85,7 @@
       width: 6px;
       height: 6px;
       border-radius: 10px;
-      background-color: #000;
+      background-color: #782c81;
       border-top: 0;
       border-bottom:0;
   }
@@ -118,8 +117,8 @@
       background: #eee;
   }
   .tabs_active {
-      border-bottom: 2px solid #000;
-      color: #000;
+      border-bottom: 2px solid #782c81;
+      color: #782c81;
   }
   .tab-content h2{
       margin-bottom: 20px;
@@ -127,7 +126,14 @@
   }
   .list_room{
     display: flex;
-    margin-bottom: 15px;
+  }
+  .btn_delete{
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 24px !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
 @media screen and (max-width: 1024px){
