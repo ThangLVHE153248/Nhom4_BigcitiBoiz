@@ -11,6 +11,7 @@ function Home() {
   const [currRoom, setCurrRoom] = useState({})
   const [focusLocation, setFocusLocation] = useState()
   const params = useParams()
+  
   const usersCondition = React.useMemo(() => {
     return {
       fieldName: 'room_id',

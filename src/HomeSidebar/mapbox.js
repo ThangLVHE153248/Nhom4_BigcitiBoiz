@@ -40,6 +40,9 @@ function Mapbox({ focusLocation }) {
   const [userCoord, setUserCoord] = useState('')
   const [locationUser, setLocationUser] = useState()
   const [focusLocationCoord, setFocusLocationCoord] = useState('')
+  const [distance, setDistance] = useState()
+  const [sumLon, setSumLong] = useState(0)
+  const [sumLat, setSumLat] = useState(0)
   const { list, Member } = useContext(AppContext)
 
   const {
@@ -47,11 +50,7 @@ function Mapbox({ focusLocation }) {
   } = React.useContext(AuthContext)
 
   //Declare variable for circle
-  let lon = 105.83675721458776,
-    lat = 21.024682141244533
-  var radius = 1
-  var center = [lon, lat]
-  var circle = turf.circle(center, radius)
+  
   // Get coordinates of user
   // useEffect(() => {
   //   Member.map(userItem => {
@@ -75,6 +74,8 @@ function Mapbox({ focusLocation }) {
 
   useEffect(() => {
     let newS = []
+    let sumX =0
+    let sumY=0
     Member.forEach(address => {
       setTimeout(() => {
         axios
@@ -87,16 +88,33 @@ function Mapbox({ focusLocation }) {
               longitude: response.data.features[0].center[0],
               latitude: response.data.features[0].center[1]
             })
+            if(Member.length<2){
+              sumX =0
+              sumY =0
+            }else{
+              sumX +=response.data.features[0].center[0]
+              sumY +=response.data.features[0].center[1]
+              console.log("toạ dộ x" +sumX +"toạ độ y"+sumY)
+            }
+            
+            
             setNewMember([...newS])
+            
+            setSumLong(sumX/Member.length)
+            setSumLat(sumY/Member.length)
+            
+            console.log("so luong" + Member.length)
           })
           .catch(function (error) {
             console.log(error)
           })
       })
     }, 500)
-  }, [Member])
+  }, [Member,list])
+  console.log("diem x" +sumLon +"diem y"+sumLat )
   useEffect(() => {
     let newSs = []
+    
     list.forEach(address => {
       axios
         .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address.location}.json?access_token=${token}`)
@@ -104,8 +122,11 @@ function Mapbox({ focusLocation }) {
           newSs.push({
             ...address,
             longitude: response.data.features[0].center[0],
-            latitude: response.data.features[0].center[1]
+            latitude: response.data.features[0].center[1],
           })
+            
+            
+            
 
           setNewAddress([...newSs])
 
@@ -147,6 +168,7 @@ function Mapbox({ focusLocation }) {
 
   async function getMatchingGeometry() {
     if (!focusLocationCoord) return
+    checkdistance()
     // Create the query
     const query = await fetch(
       `https://api.mapbox.com/matching/v5/mapbox/driving/${focusLocationCoord}?&radiuses=25;25&geometries=geojson&steps=true&access_token=${token}`,
@@ -162,6 +184,26 @@ function Mapbox({ focusLocation }) {
     const coords = response.matchings[0].geometry
     return coords
   }
+  const checkdistance =() =>{
+    console.log(newAddress)
+    axios.get(`https://api.mapbox.com/directions/v5/mapbox/driving/${focusLocationCoord}.json?access_token=${token}`)
+    .then(function(responseloca) {
+      const distance = responseloca.data.routes[0].distance/1000;
+      console.log("distance",distance);
+      // alert('khoảng cách'+distance+ "km")
+      setDistance(distance.toFixed(2))
+
+    }).catch(function(error) {
+      console.log(error)
+    })
+  }
+ 
+  
+  const lon = sumLon
+  const lat = sumLat
+  const radius = 1
+  const center = [lon, lat]
+  const circle = turf.circle(center, radius)
 
   const layerRoute = new GeoJsonLayer({
     id: 'geojson-layer',
@@ -180,6 +222,9 @@ function Mapbox({ focusLocation }) {
 
   return (
     <div className="vote_mapbox">
+      <div className="cycling" style={{width:"22%",height:"50px",opacity:"0.7",position:"absolute" ,backgroundColor:"#fff" ,left:"3%",top:"10px",zIndex:"20",borderRadius:"10px",textAlign:"left",marginLeft:"10px",paddingLeft:"15px"}}> 
+        <h5 style={{lineHeight:"50px",margin:"0"}}>Khoảng cách: {distance} km</h5>
+      </div>
       <DeckGL
         initialViewState={{
           longitude: viewport.longitude,
