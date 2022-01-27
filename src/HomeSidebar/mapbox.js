@@ -26,14 +26,7 @@ function Mapbox({ focusLocation }) {
 
   const arrLocationVoteHost = useFirestore('locations', conditionVote)
 
-  const [viewport, setViewport] = useState({
-    width: '75vw',
-    height: '100vh',
-    latitude: 21.0164909,
-    longitude: 105.7772149,
-    zoom: 13
-  })
-
+ 
   const token = 'pk.eyJ1IjoidHJhbm5oYW4xMiIsImEiOiJja3k5cnd6M2QwOWN4MnZxbWJianJvNTgxIn0.ubgU2PdV-ahm1liOZLyjMw'
   const [newAddress, setNewAddress] = useState([])
   const [newMember, setNewMember] = useState([])
@@ -43,7 +36,8 @@ function Mapbox({ focusLocation }) {
   const [distance, setDistance] = useState()
   const [sumLon, setSumLong] = useState(0)
   const [sumLat, setSumLat] = useState(0)
-  const { list, Member } = useContext(AppContext)
+
+  const { list, Member,viewport,setViewport } = useContext(AppContext)
 
   const {
     user: { uid }

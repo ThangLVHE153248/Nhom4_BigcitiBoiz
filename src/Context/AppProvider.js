@@ -12,6 +12,13 @@ export default function AppProvider({ children }) {
   const [currLocation, setCurrLocation] = useState('')
   const [nickname, setNickName] = useState('')
   const [Member, setMember] = useState([])
+  const [viewport, setViewport] = useState({
+    width: '75vw',
+    height: '100vh',
+    latitude: 21.0164909,
+    longitude: 105.7772149,
+    zoom: 13
+  })
   // const [newAddress, setNewAddress] = useState([])
 
   const {
@@ -71,7 +78,9 @@ export default function AppProvider({ children }) {
         nickname,
         setNickName,
         Member,
-        setMember
+        setMember,
+        viewport,
+        setViewport
       }}
     >
       {children}

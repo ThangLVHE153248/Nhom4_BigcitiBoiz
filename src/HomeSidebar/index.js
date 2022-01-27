@@ -32,7 +32,7 @@ function Home() {
     <div className="homeView">
       <LogOut />
       <div className="sidebar">
-        <HomeSidebar setCurrRoom={setCurrRoom} setFocusLocation={setFocusLocation} listMember={listMember} />
+        <HomeSidebar setCurrRoom={setCurrRoom} focusLocation={focusLocation} setFocusLocation={setFocusLocation} listMember={listMember} />
       </div>
       <div className="maps">
         <Mapbox currRoom={currRoom} params={params.id} focusLocation={focusLocation} />
