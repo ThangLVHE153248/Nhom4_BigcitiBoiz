@@ -5,6 +5,8 @@ import './homeSidebar.css'
 import LogOut from '../components/LogOut'
 import { useParams } from 'react-router-dom'
 import useFirestore from '../hooks/useFirestore'
+import { AppContext } from '../Context/AppProvider'
+import axios from 'axios'
 function Home() {
   const [currRoom, setCurrRoom] = useState({})
   const [focusLocation, setFocusLocation] = useState()
@@ -38,4 +40,4 @@ function Home() {
   )
 }
 
-export default Home
+export default React.memo(Home)

@@ -12,6 +12,7 @@ export default function AppProvider({ children }) {
   const [currLocation, setCurrLocation] = useState('')
   const [nickname, setNickName] = useState('')
   const [Member, setMember] = useState([])
+  // const [newAddress, setNewAddress] = useState([])
 
   const {
     user: { uid }
