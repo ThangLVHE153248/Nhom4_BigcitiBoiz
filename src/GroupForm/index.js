@@ -95,7 +95,7 @@ function GroupForm() {
       }
     }
   })
-//Xoá địa chỉ
+  //Xoá địa chỉ
   const onDelete = value => {
     //  db.child(`location/${value}`).remove();
     console.log(locationVote)
@@ -108,7 +108,6 @@ function GroupForm() {
       }
     }
     setLocationVote([...locationVote])
-
   }
   const handleEdit = (value, index) => {
     console.log(value, index)
@@ -130,7 +129,9 @@ function GroupForm() {
           <Row>
             <Col lg={7} className="div_bg">
               <img
-                src={'http://moitruongdulich.vn/mypicture/images/2020/CNMN42020/185ISO-21401.jpg'}
+                src={
+                  'https://images-ext-1.discordapp.net/external/igXtbNwbgQbW2OkUc0UXAbKhAHX4s5zz7kdnTnZzWd0/%3Fcompress%3D1%26resize%3D1000x750%26vertical%3Dtop/https/cdn.dribbble.com/users/1296728/screenshots/6000459/media/c012df62319f1e4bf2e44e1b7f8ea3c7.jpg?width=500&height=375'
+                }
                 className="img_bg"
               />
             </Col>

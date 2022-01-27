@@ -38,11 +38,15 @@ function LoginSocial({ setIsAuth }) {
         <div className="login_content height_content">
           <Row>
             <Col md={6} lg={6} className="height_content">
-              <img src={'https://preview.hqtemplate.com/preview16/images/pic-login-2.svg'} className="img_banner" />
+              <img
+                src={'https://image.freepik.com/free-vector/young-people-with-thumb-like-symbol_23-2148120730.jpg'}
+                className="img_banner"
+              />
             </Col>
             <Col md={6} lg={6} className="height_content">
               <div className="login_item">
                 <h1>Chào Mừng Bạn Đến Với App Cùng Đi Chơi!</h1>
+                <h5>Một ứng dụng tuyệt vời để chọn lựa địa điểm đi chơi cùng bạn bè</h5>
                 <button onClick={() => handleLogin(fbProvider)} className="facebook">
                   <BsFacebook className="icon-login" />
                   <span>Đăng Nhập Facebook</span>

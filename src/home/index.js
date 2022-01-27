@@ -92,9 +92,9 @@ function Home() {
     },
     validationSchema: Yup.object({
       content: Yup.string()
-        .min(2, 'Nội Dung Phải Chứa Ít Nhất 2 Ký Tự')
-        .max(30, 'Nội Dung Tối Đa 512 Ký Tự')
-        .required('Nội Dung Không Được Để Trống!')
+        .min(20, 'Mã Phòng Phải Chứa 20 Ký Tự')
+        .max(30, 'Mã Phòng Phải Chứa 30 Ký Tự')
+        .required('Mã Phòng Không Được Để Trống!')
     }),
     onSubmit: values => {
       const clickRoom = db.collection('rooms').doc(values.content)
@@ -189,9 +189,6 @@ function Home() {
               <button className="btn_address" onClick={() => handleJoinRoom(room.id)}>
                 {room.title}
               </button>
-              <button className="login_btn btn_delete" onClick={handleDelete}>
-                <AiFillDelete />
-              </button>
             </div>
           ))}
         </div>
@@ -207,9 +204,6 @@ function Home() {
             <div className="list_room" key={room.id}>
               <button className="btn_address" onClick={() => handleJoinRoom(room.id)}>
                 {room.title}
-              </button>
-              <button className="login_btn btn_delete" onClick={handleDelete}>
-                <AiFillDelete />
               </button>
             </div>
           ))}
@@ -259,21 +253,7 @@ function Home() {
                   </p>
                 </Carousel.Caption>
               </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block img_slide"
-                  src="https://www.gstatic.com/meet/user_edu_brady_bunch_light_81fa864771e5c1dd6c75abe020c61345.svg"
-                  alt="Second slide"
-                />
 
-                <Carousel.Caption>
-                  <h3>Xem mọi người cùng lúc</h3>
-                  <p>
-                    Để thấy nhiều người hơn cùng một lúc, hãy chuyển tới phần Thay đổi bố cục trong trình đơn Tùy chọn
-                    khác.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
               <Carousel.Item>
                 <img
                   className="d-block img_slide"
@@ -284,8 +264,8 @@ function Home() {
                 <Carousel.Caption>
                   <h3>Lên kế hoạch trước</h3>
                   <p>
-                    Nhấp vào <strong>Cuộc bình chọn mới</strong> để lên lịch cuộc bình chọn trong Lịch Google và gửi lời
-                    mời cho người tham gia
+                    Nhấp vào <strong>Cuộc bình chọn mới</strong> để lên lịch cuộc bình chọn và gửi lời mời cho người
+                    tham gia
                   </p>
                 </Carousel.Caption>
               </Carousel.Item>
@@ -297,7 +277,7 @@ function Home() {
                 />
 
                 <Carousel.Caption>
-                  <h3>Cuộc họp của bạn được bảo vệ an toàn</h3>
+                  <h3>Cuộc bình chọn của bạn được bảo vệ an toàn</h3>
                   <p>Không ai có thể tham gia cuộc họp trừ khi người tổ chức mời hoặc cho phép</p>
                 </Carousel.Caption>
               </Carousel.Item>
