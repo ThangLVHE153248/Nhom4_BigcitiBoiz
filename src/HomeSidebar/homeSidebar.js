@@ -199,7 +199,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
   }
 
   const handleConfirm = e => {
-    if (window.confirm("Bạn có muốn kết thúc bình chọn không ?")) {
+    if (window.confirm('Bạn có muốn kết thúc bình chọn không ?')) {
       handleEndVote(e)
     }
   }
@@ -229,7 +229,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
           }
         })
       })
-      .then(() => { })
+      .then(() => {})
       .catch(error => {
         console.log('Transaction failed: ', error)
       })
@@ -256,10 +256,12 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
             <h2>{valueRoom.description}</h2>
           </div>
 
-
           <div className={isActive ? 'home-sidebar-location' : 'contendisable'}>
-            <h3 className="title" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}><FaCrown />{""}
-              <span style={{ marginLeft: '10px', fontSize: '25px' }}>Địa điểm được chọn nhiều nhất</span></h3>
+            <h3 className="title" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+              <FaCrown />
+              {''}
+              <span style={{ marginLeft: '10px', fontSize: '25px' }}>Địa điểm được chọn nhiều nhất</span>
+            </h3>
             <h5 className="addressVote">{voteWin.location}</h5>
           </div>
 
@@ -340,7 +342,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember }) => {
                 onClick={handleConfirm}
                 style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
               >
-                <FaCalendarCheck /> {''}
+                <FaCalendarCheck style={{ marginRight: '5px' }} />
                 Kết thúc
               </button>
             ) : (

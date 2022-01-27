@@ -95,7 +95,7 @@ export default function LoginForm() {
                   fontSize: '28px'
                 }}
               >
-                Chào mừng {displayName} đến với App Cùng Đi Chơi
+                Nhập Tên Và Địa Chỉ Của Bạn Để Hiện Trong Phòng Bình Chọn
               </h1>
               <form onSubmit={formik.handleSubmit}>
                 <div className="login_wrapper">
@@ -157,10 +157,7 @@ export default function LoginForm() {
               </form>
             </Col>
             <Col lg={7} className="div_bg">
-              <img
-                src={'http://moitruongdulich.vn/mypicture/images/2020/CNMN42020/185ISO-21401.jpg'}
-                className="img_bg"
-              />
+              <img src={'https://ak.picdn.net/shutterstock/videos/8994469/thumb/11.jpg'} className="img_bg" />
             </Col>
           </Row>
         </div>
