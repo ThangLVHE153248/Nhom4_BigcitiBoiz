@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import AuthProvider from './Context/AuthProvider'
 import GroupForm from './GroupForm'
 import LoginForm from './LoginForm'

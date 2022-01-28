@@ -1,6 +1,5 @@
 import React from 'react'
 import './style.css'
-import { Button } from 'react-bootstrap'
 export default function AnnouncingVote() {
   return (
     <div className="announcing_form">

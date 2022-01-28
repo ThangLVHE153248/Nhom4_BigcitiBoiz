@@ -1,25 +1,21 @@
-import React, { useContext, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
-import { AppContext } from '../Context/AppProvider'
 import firebase, { auth } from '../firebase/config'
 import { addDocument } from '../firebase/services'
 import './styles.css'
 import { BsFacebook, BsGoogle } from 'react-icons/bs'
-import { AiFillGoogleCircle } from 'react-icons/ai'
 
 const fbProvider = new firebase.auth.FacebookAuthProvider()
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 
-function LoginSocial({ setIsAuth }) {
+function LoginSocial() {
   const roomId = localStorage.getItem('roomId')
-  console.log(roomId)
   const navigate = useNavigate()
 
   const handleLogin = async provider => {
     const { additionalUserInfo, user } = await auth.signInWithPopup(provider)
     roomId ? navigate(`/room-vote/${roomId}`) : navigate('/')
-    // localStorage.removeItem('roomId')
 
     if (additionalUserInfo?.isNewUser && user) {
       addDocument('users', {
@@ -27,7 +23,6 @@ function LoginSocial({ setIsAuth }) {
         email: user.email,
         uid: user.uid,
         photoURL: user.photoURL,
-        uid: user.uid,
         providerId: additionalUserInfo.providerId
       })
     }

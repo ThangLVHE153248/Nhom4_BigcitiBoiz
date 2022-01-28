@@ -2,7 +2,7 @@ import React, { useRef, useContext } from 'react'
 import './styles.css'
 import { useOutsideClick } from './useOutsideClick'
 import { AuthContext } from '../Context/AuthProvider'
-import firebase, { auth } from '../firebase/config'
+import { auth } from '../firebase/config'
 import { useNavigate } from 'react-router-dom'
 import { IoIosLogOut } from 'react-icons/io'
 
@@ -13,7 +13,7 @@ function LogOut() {
   const onClick = () => setIsActive(!isActive)
 
   const {
-    user: { displayName, uid, photoURL }
+    user: { displayName, photoURL }
   } = useContext(AuthContext)
 
   const signOutUser = () => {

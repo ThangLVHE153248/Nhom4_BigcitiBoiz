@@ -9,8 +9,8 @@ import './style.css'
 import { AppContext } from '../Context/AppProvider'
 import { useNavigate } from 'react-router-dom'
 
-function Mapbox({ setShow,onClose }) {
-  const { curraddName, setCurrAddName, setLocationVote,locationVote } = useContext(AppContext)
+function Mapbox({ onClose }) {
+  const { curraddName, setCurrAddName } = useContext(AppContext)
   let navigate = useNavigate()
   // Token
   var token = 'pk.eyJ1IjoiY29udG90IiwiYSI6ImNreWFvamp0dDAwbnIyb210OGdkbjUxc2oifQ.4h9mS6yDTwWeWFpHyJ_6EQ'
@@ -29,7 +29,6 @@ function Mapbox({ setShow,onClose }) {
     pitch: 0
   })
 
-  
   // Drag
   var [events, logEvents] = useState({})
   var onMarkerDragStart = useCallback(event => {
@@ -93,12 +92,10 @@ function Mapbox({ setShow,onClose }) {
     console.log(marker.latitude)
     console.log(marker.longitude)
     console.log(nameAddress)
-      setCurrAddName(nameAddress)
-
+    setCurrAddName(nameAddress)
     onClose()
-    
   }
- 
+
   // Return
   return (
     <div>
@@ -142,10 +139,10 @@ function Mapbox({ setShow,onClose }) {
           </div>
         </div>
       </div>
-      <button type="submit" className="btnAdd"   onClick={e =>handleSubmitLocation(e)}>
-        {curraddName? "Sửa địa điểm" : "Thêm địa điểm"}
+      <button type="submit" className="btnAdd" onClick={e => handleSubmitLocation(e)}>
+        {curraddName ? 'Sửa địa điểm' : 'Thêm địa điểm'}
       </button>
     </div>
-  ) 
+  )
 }
 export default Mapbox

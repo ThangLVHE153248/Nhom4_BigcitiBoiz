@@ -19,13 +19,12 @@ export default function AppProvider({ children }) {
     longitude: 105.7772149,
     zoom: 13
   })
-  // const [newAddress, setNewAddress] = useState([])
 
   const {
     user: { uid }
   } = React.useContext(AuthContext)
 
-  //// Đây là lấy ra các danh sách phòng mà người dùng là khách(client)
+  // Đây là lấy ra các danh sách phòng mà người dùng là khách(client)
   const roomsClientCondition = React.useMemo(() => {
     return {
       fieldName: 'client',
@@ -34,9 +33,8 @@ export default function AppProvider({ children }) {
     }
   }, [uid])
   const roomClient = useGetDataFirebase('rooms', roomsClientCondition)
-  // console.log('client', roomClient)
 
-  //// Đây là lấy ra các danh sách mà người dùng là chủ (host)
+  // Đây là lấy ra các danh sách mà người dùng là chủ (host)
   const roomsHostCondition = React.useMemo(() => {
     return {
       fieldName: 'user_id',
@@ -45,14 +43,13 @@ export default function AppProvider({ children }) {
     }
   }, [uid])
   const roomHost = useGetDataFirebase('rooms', roomsHostCondition)
-  // console.log('host', roomHost)
 
   /// Kiểm tra phòng host
   const selectedRoomHost = React.useMemo(
     () => roomHost.find(room => room.id === selectedRoomId) || {},
     [roomHost, selectedRoomId]
   )
-  // console.log(selectedRoomHost)
+
   const selectedRoomClient = React.useMemo(
     () => roomClient.find(room => room.id === selectedRoomId) || {},
     [roomClient, selectedRoomId]

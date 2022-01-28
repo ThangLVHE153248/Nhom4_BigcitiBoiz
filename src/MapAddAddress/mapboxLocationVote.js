@@ -10,8 +10,7 @@ import { AppContext } from '../Context/AppProvider'
 import { useNavigate, useParams } from 'react-router-dom'
 
 function MapboxLocationVote({ setShow, onClose }) {
-  const { curraddName, setCurrAddName, setLocationVote, locationVote, currLocation } = useContext(AppContext)
-  const params = useParams()
+  const { setLocationVote, locationVote } = useContext(AppContext)
   // Token
   var token = 'pk.eyJ1IjoiY29udG90IiwiYSI6ImNreWFvamp0dDAwbnIyb210OGdkbjUxc2oifQ.4h9mS6yDTwWeWFpHyJ_6EQ'
   // Marker
@@ -89,10 +88,6 @@ function MapboxLocationVote({ setShow, onClose }) {
 
   var handleSubmitLocation = e => {
     e.preventDefault()
-    // console.log(marker.latitude)
-    // console.log(marker.longitude)
-    // console.log(nameAddress)
-    console.log(locationVote.includes(nameAddress))
     if (!locationVote.includes(nameAddress) && locationVote.length <= 4) {
       setLocationVote(prev => [...prev, nameAddress])
     } else if (locationVote.length > 4) {

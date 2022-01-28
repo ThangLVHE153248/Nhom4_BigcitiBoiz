@@ -157,7 +157,11 @@ export default function LoginForm() {
               </form>
             </Col>
             <Col lg={7} className="div_bg">
-              <img src={'https://ak.picdn.net/shutterstock/videos/8994469/thumb/11.jpg'} className="img_bg" />
+              <img
+                src={'https://preview.colorlib.com/theme/safario/img/home/xhero-img.png.pagespeed.ic.LaxhZHLnb9.webp'}
+                className="img_bg"
+                style={{ height: 'calc(100vh - 100px)' }}
+              />
             </Col>
           </Row>
         </div>

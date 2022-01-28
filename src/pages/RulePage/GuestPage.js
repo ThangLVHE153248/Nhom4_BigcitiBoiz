@@ -1,6 +1,5 @@
 import React from 'react'
 import { Outlet, Navigate } from 'react-router-dom'
-import { AuthContext } from '../../Context/AuthProvider'
 
 function GuestPage() {
   const user = localStorage.getItem('uid')

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Row, Col, Button } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InputForm from '../components/InputForm'
 import ModalForm from '../components/ModalForm'
@@ -10,8 +10,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { db } from '../firebase/config'
 import { AuthContext } from '../Context/AuthProvider'
-import useFirestore from '../hooks/useFirestore'
-import AppProvider, { AppContext } from '../Context/AppProvider'
+import { AppContext } from '../Context/AppProvider'
 import { addDocument } from '../firebase/services'
 import MapboxLocationVote from '../MapAddAddress/mapboxLocationVote'
 import LogOut from '../components/LogOut'
@@ -29,8 +28,6 @@ function GroupForm() {
   const [shows, setShows] = useState(false)
   const [value, SetValue] = useState('')
   const [index, SetIndex] = useState('')
-
-  const [nameAddress, SetnameAddress] = useState('')
 
   const handleGoBack = () => {
     navigate('/contact')
@@ -111,9 +108,6 @@ function GroupForm() {
   }
   const handleEdit = (value, index) => {
     console.log(value, index)
-    // const updateLocation = [...locationVote]
-    // updateLocation[index] = value
-    // setLocationVote(updateLocation)
     SetValue(value)
     SetIndex(index)
     setShow(true)
@@ -130,9 +124,10 @@ function GroupForm() {
             <Col lg={7} className="div_bg">
               <img
                 src={
-                  'https://images-ext-1.discordapp.net/external/igXtbNwbgQbW2OkUc0UXAbKhAHX4s5zz7kdnTnZzWd0/%3Fcompress%3D1%26resize%3D1000x750%26vertical%3Dtop/https/cdn.dribbble.com/users/1296728/screenshots/6000459/media/c012df62319f1e4bf2e44e1b7f8ea3c7.jpg?width=500&height=375'
+                  'https://preview.colorlib.com/theme/tralive/assets/img/gallery/xabout.png.pagespeed.ic.ZsrvwBYE3S.webp'
                 }
                 className="img_bg"
+                style={{ height: 'calc(100vh - 100px)' }}
               />
             </Col>
             <Col lg={5} className="form_left">
