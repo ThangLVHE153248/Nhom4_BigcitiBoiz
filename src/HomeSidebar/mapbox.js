@@ -26,7 +26,7 @@ function Mapbox({ focusLocation }) {
 
   const arrLocationVoteHost = useFirestore('locations', conditionVote)
 
- 
+
   const token = 'pk.eyJ1IjoidHJhbm5oYW4xMiIsImEiOiJja3k5cnd6M2QwOWN4MnZxbWJianJvNTgxIn0.ubgU2PdV-ahm1liOZLyjMw'
   const [newAddress, setNewAddress] = useState([])
   const [newMember, setNewMember] = useState([])
@@ -37,39 +37,16 @@ function Mapbox({ focusLocation }) {
   const [sumLon, setSumLong] = useState(0)
   const [sumLat, setSumLat] = useState(0)
 
-  const { list, Member,viewport,setViewport } = useContext(AppContext)
+  const { list, Member, viewport, setViewport } = useContext(AppContext)
 
   const {
     user: { uid }
   } = React.useContext(AuthContext)
 
-  //Declare variable for circle
-  
-  // Get coordinates of user
-  // useEffect(() => {
-  //   Member.map(userItem => {
-  //     if (userItem.user_id === uid) {
-  //       // setUserCoord(`${userItem.longitude},${userItem.latitude}`)
-  //       axios
-  //         .get(
-  //           `https://api.mapbox.com/geocoding/v5/mapbox.places/${userItem.currentLocation}.json?access_token=${token}`
-  //         )
-  //         .then(function (response) {
-  //           const newUserCoord = `${response.data.features[0].center[0]},${response.data.features[0].center[1]}`
-  //           setUserCoord(newUserCoord)
-  //           console.log(userCoord)
-  //         })
-  //         .catch(function (error) {
-  //           console.log(error)
-  //         })
-  //     }
-  //   })
-  // }, [Member, uid])
-
   useEffect(() => {
     let newS = []
-    let sumX =0
-    let sumY=0
+    let sumX = 0
+    let sumY = 0
     Member.forEach(address => {
       setTimeout(() => {
         axios
@@ -82,21 +59,17 @@ function Mapbox({ focusLocation }) {
               longitude: response.data.features[0].center[0],
               latitude: response.data.features[0].center[1]
             })
-            if(Member.length<2){
-              sumX =0
-              sumY =0
-            }else{
-              sumX +=response.data.features[0].center[0]
-              sumY +=response.data.features[0].center[1]
-              console.log("toạ dộ x" +sumX +"toạ độ y"+sumY)
+            if (Member.length < 2) {
+              sumX = 0
+              sumY = 0
+            } else {
+              sumX += response.data.features[0].center[0]
+              sumY += response.data.features[0].center[1]
             }
-            
-            
             setNewMember([...newS])
-            
-            setSumLong(sumX/Member.length)
-            setSumLat(sumY/Member.length)
-            
+            setSumLong(sumX / Member.length)
+            setSumLat(sumY / Member.length)
+
             console.log("so luong" + Member.length)
           })
           .catch(function (error) {
@@ -104,11 +77,11 @@ function Mapbox({ focusLocation }) {
           })
       })
     }, 500)
-  }, [Member,list])
-  console.log("diem x" +sumLon +"diem y"+sumLat )
+  }, [Member, list])
+
   useEffect(() => {
     let newSs = []
-    
+
     list.forEach(address => {
       axios
         .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address.location}.json?access_token=${token}`)
@@ -118,9 +91,9 @@ function Mapbox({ focusLocation }) {
             longitude: response.data.features[0].center[0],
             latitude: response.data.features[0].center[1],
           })
-            
-            
-            
+
+
+
 
           setNewAddress([...newSs])
 
@@ -178,21 +151,18 @@ function Mapbox({ focusLocation }) {
     const coords = response.matchings[0].geometry
     return coords
   }
-  const checkdistance =() =>{
-    console.log(newAddress)
+  const checkdistance = () => {
     axios.get(`https://api.mapbox.com/directions/v5/mapbox/driving/${focusLocationCoord}.json?access_token=${token}`)
-    .then(function(responseloca) {
-      const distance = responseloca.data.routes[0].distance/1000;
-      console.log("distance",distance);
-      // alert('khoảng cách'+distance+ "km")
-      setDistance(distance.toFixed(2))
-
-    }).catch(function(error) {
-      console.log(error)
-    })
+      .then(function (responseloca) {
+        const distance = responseloca.data.routes[0].distance / 1000
+        // alert('khoảng cách'+distance+ "km")
+        setDistance(distance.toFixed(2))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
- 
-  
+
   const lon = sumLon
   const lat = sumLat
   const radius = 1
@@ -216,8 +186,24 @@ function Mapbox({ focusLocation }) {
 
   return (
     <div className="vote_mapbox">
-      <div className="cycling" style={{width:"22%",height:"50px",opacity:"0.7",position:"absolute" ,backgroundColor:"#fff" ,left:"3%",top:"10px",zIndex:"20",borderRadius:"10px",textAlign:"left",marginLeft:"10px",paddingLeft:"15px"}}> 
-        <h5 style={{lineHeight:"50px",margin:"0"}}>Khoảng cách: {distance} km</h5>
+      <div
+        className="cycling"
+        style={{
+          width: '22%',
+          height: '50px',
+          opacity: '0.7',
+          position: 'absolute',
+          backgroundColor: '#fff',
+          left: '3%',
+          top: '10px',
+          zIndex: '20',
+          borderRadius: '10px',
+          textAlign: 'left',
+          marginLeft: '10px',
+          paddingLeft: '15px'
+        }}
+      >
+        <h5 style={{ lineHeight: '50px', margin: '0' }}>Khoảng cách: {distance} km</h5>
       </div>
       <DeckGL
         initialViewState={{
@@ -251,7 +237,15 @@ function Mapbox({ focusLocation }) {
             // setTimeout(() => {
             newAddress.map((val, index) => {
               return (
-                <Marker key={index} latitude={val.latitude} longitude={val.longitude} offsetLeft={-10} offsetTop={-28}>
+                <Marker
+                  className="map_marker"
+                  key={index}
+                  latitude={val.latitude}
+                  longitude={val.longitude}
+                  offsetLeft={-10}
+                  offsetTop={-28}
+                >
+                  <div className="map_word">{val.location.split(',')[0]}</div>
                   <div>
                     <FaMapMarkerAlt className="marker marker_location" />
                   </div>

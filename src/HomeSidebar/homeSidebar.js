@@ -15,9 +15,9 @@ import { SiGooglemaps } from 'react-icons/si'
 import { FaCrown } from 'react-icons/fa'
 import axios from 'axios'
 
-const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember,focusLocation }) => {
+const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation }) => {
   const navigate = useNavigate()
-  const { locationVote, setLocationVote, selectedRoomId, setList, setSelectedRoomId, setMember,setViewport } =
+  const { locationVote, setLocationVote, selectedRoomId, setList, setSelectedRoomId, setMember, setViewport } =
     React.useContext(AppContext)
   const params = useParams()
 
@@ -230,7 +230,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember,focusLocation }
           }
         })
       })
-      .then(() => {})
+      .then(() => { })
       .catch(error => {
         console.log('Transaction failed: ', error)
       })
@@ -240,39 +240,9 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember,focusLocation }
   // Display route from user to entertainment venues
   const handleFocusLocation = location => {
     setFocusLocation(location)
-    onSelectCity(news)
   }
 
 
-
-  const token = 'pk.eyJ1IjoidHJhbm5oYW4xMiIsImEiOiJja3k5cnd6M2QwOWN4MnZxbWJianJvNTgxIn0.ubgU2PdV-ahm1liOZLyjMw'
-  const [news, setNews] = useState([])
-  useEffect(() => {
-        axios
-            .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${focusLocation}.json?access_token=${token}`)
-            .then(function (response) {
-                setNews({
-                    focusLocation,
-                    longitude: response.data.features[0].center[0],
-                    latitude: response.data.features[0].center[1]
-                })
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-        console.log(news)
-    }, [focusLocation])
-    const onSelectCity = React.useCallback((data) => {
-      console.log(data);
-      setViewport({
-          width: '75vw',
-          height: '100vh',
-          longitude: data.longitude,
-          latitude: data.latitude,
-          zoom: 14,
-      });
-  }, [])
-    
   return (
     <>
       <div className="home">
