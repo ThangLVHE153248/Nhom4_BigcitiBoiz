@@ -179,7 +179,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
     e.preventDefault()
     getDataVote()
 
-    setActive(true)
+    // setActive(true)
 
     db.collection('rooms')
       .doc(params.id)
@@ -190,6 +190,14 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
         console.log('Document successfully updated!')
       })
   }
+  React.useEffect(() => {
+    db.collection('rooms')
+      .doc(`${params.id}`)
+      .onSnapshot(doc => {
+        doc.data().vote_status ? setActive(false) : setActive(true)
+        console.log('Current data: ', doc.data().vote_status)
+      })
+  }, [params.id])
 
   const handleConfirm = e => {
     if (window.confirm('Bạn có muốn kết thúc bình chọn không ?')) {
@@ -222,7 +230,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
           }
         })
       })
-      .then(() => { })
+      .then(() => {})
       .catch(error => {
         console.log('Transaction failed: ', error)
       })
