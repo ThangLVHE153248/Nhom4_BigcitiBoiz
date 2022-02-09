@@ -192,9 +192,9 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
   }
   React.useEffect(() => {
     db.collection('rooms')
-      .doc(`${params.id}`)
+      .doc('user_id')
       .onSnapshot(doc => {
-        doc.data().vote_status ? setActive(false) : setActive(true)
+        doc.data()?.vote_status ? setActive(false) : setActive(true)
         console.log('Current data: ', doc.data().vote_status)
       })
   }, [params.id])

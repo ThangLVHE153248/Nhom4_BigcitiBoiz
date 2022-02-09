@@ -17,7 +17,9 @@ function Home() {
   const {
     user: { uid }
   } = useContext(AuthContext)
-  const { roomClient, roomHost, setSelectedRoomId, setCurrLocation, setCurrAddName } = useContext(AppContext)
+  const [roomHost, setRoomHost] = useState()
+  const [roomClient, setRoomClient] = useState()
+  const { setSelectedRoomId, setCurrLocation, setCurrAddName } = useContext(AppContext)
   const [hasFocus, setFocus] = useState(false)
 
   const navigate = useNavigate()
@@ -28,6 +30,32 @@ function Home() {
     setCurrAddName('')
     navigate('/contact')
   }
+  React.useEffect(() => {
+    db.collection('rooms')
+      .where('user_id', '==', localStorage.getItem('uid'))
+      .onSnapshot(snapshot => {
+        const documents = snapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }))
+        console.log(documents)
+
+        setRoomHost(documents)
+      })
+  }, [uid])
+  React.useEffect(() => {
+    db.collection('rooms')
+      .where('client', 'array-contains', localStorage.getItem('uid'))
+      .onSnapshot(snapshot => {
+        const documents = snapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }))
+        console.log(documents)
+
+        setRoomClient(documents)
+      })
+  }, [uid])
 
   const handleJoinRoom = value => {
     setSelectedRoomId(value)
@@ -124,7 +152,7 @@ function Home() {
       content: (
         <div className="tab-content">
           <h2>Các Phòng Bạn Đã Tạo Bình Chọn</h2>
-          {roomHost.map(room => (
+          {roomHost?.map(room => (
             <div className="list_room" key={room.id}>
               <button className="btn_address" onClick={() => handleJoinRoom(room.id)}>
                 {room.title}
@@ -140,7 +168,7 @@ function Home() {
       content: (
         <div className="tab-content">
           <h2>Các Phòng Bạn Đã Tham Gia</h2>
-          {roomClient.map(room => (
+          {roomClient?.map(room => (
             <div className="list_room" key={room.id}>
               <button className="btn_address" onClick={() => handleJoinRoom(room.id)}>
                 {room.title}
@@ -151,6 +179,7 @@ function Home() {
       )
     }
   ]
+
   return (
     <div className="home_body">
       <LogOut />

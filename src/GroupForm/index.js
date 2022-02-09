@@ -16,6 +16,7 @@ import MapboxLocationVote from '../MapAddAddress/mapboxLocationVote'
 import LogOut from '../components/LogOut'
 import { AiFillDelete } from 'react-icons/ai'
 import { BsArrowReturnLeft, BsArrowReturnRight } from 'react-icons/bs'
+import firebase from '../firebase/config'
 
 function GroupForm() {
   const {
@@ -68,7 +69,8 @@ function GroupForm() {
             vote_status: true,
             member: [uid],
             client: [],
-            user_id: uid
+            user_id: uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
           })
           .then(docRef => {
             console.log('Document written with ID: ', docRef.id)
