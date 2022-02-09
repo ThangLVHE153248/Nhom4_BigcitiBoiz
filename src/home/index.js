@@ -32,26 +32,26 @@ function Home() {
   }
   React.useEffect(() => {
     db.collection('rooms')
+      .orderBy('createdAt')
       .where('user_id', '==', localStorage.getItem('uid'))
       .onSnapshot(snapshot => {
         const documents = snapshot.docs.map(doc => ({
           ...doc.data(),
           id: doc.id
         }))
-        console.log(documents)
 
         setRoomHost(documents)
       })
   }, [uid])
   React.useEffect(() => {
     db.collection('rooms')
+      .orderBy('createdAt')
       .where('client', 'array-contains', localStorage.getItem('uid'))
       .onSnapshot(snapshot => {
         const documents = snapshot.docs.map(doc => ({
           ...doc.data(),
           id: doc.id
         }))
-        console.log(documents)
 
         setRoomClient(documents)
       })
