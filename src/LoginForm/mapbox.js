@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom'
 
 function Mapbox({ onClose }) {
   const { curraddName, setCurrAddName } = useContext(AppContext)
-  let navigate = useNavigate()
   // Token
   var token = 'pk.eyJ1IjoiY29udG90IiwiYSI6ImNreWFvamp0dDAwbnIyb210OGdkbjUxc2oifQ.4h9mS6yDTwWeWFpHyJ_6EQ'
   // Marker
@@ -87,11 +86,8 @@ function Mapbox({ onClose }) {
 
   // Submit location
 
-  var handleSubmitLocation = (e) => {
-    e.preventDefault();
-    console.log(marker.latitude)
-    console.log(marker.longitude)
-    console.log(nameAddress)
+  var handleSubmitLocation = e => {
+    e.preventDefault()
     setCurrAddName(nameAddress)
     onClose()
   }

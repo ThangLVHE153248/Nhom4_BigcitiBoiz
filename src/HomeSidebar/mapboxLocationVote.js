@@ -8,9 +8,9 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import './style.css'
 import { AppContext } from '../Context/AppProvider'
 import { db } from '../firebase/config'
-import { useNavigate, useParams } from 'react-router-dom'
-function MapboxLocationVote({ setShow, onClose }) {
-  const { setLocationVote, locationVote } = useContext(AppContext)
+import { useParams } from 'react-router-dom'
+function MapboxLocationVote({ onClose }) {
+  const { setLocationVote } = useContext(AppContext)
   const params = useParams()
   // Token
   var token = 'pk.eyJ1IjoiY29udG90IiwiYSI6ImNreWFvamp0dDAwbnIyb210OGdkbjUxc2oifQ.4h9mS6yDTwWeWFpHyJ_6EQ'
@@ -86,7 +86,6 @@ function MapboxLocationVote({ setShow, onClose }) {
   }
 
   //Kiểm tra tồn tại địa chỉ chưa
-
   const [locationVoteHome, setlocationVoteHome] = useState([])
   React.useEffect(() => {
     db.collection('locations')
@@ -94,7 +93,6 @@ function MapboxLocationVote({ setShow, onClose }) {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          // console.log(doc.data())
           const data = doc.data().location
           setlocationVoteHome(prev => [...prev, data])
         })
@@ -103,10 +101,6 @@ function MapboxLocationVote({ setShow, onClose }) {
 
   var handleSubmitLocation = e => {
     e.preventDefault()
-    console.log(marker.latitude)
-    console.log(marker.longitude)
-    console.log(locationVoteHome)
-    console.log(locationVoteHome.includes(nameAddress))
     if (!locationVoteHome.includes(nameAddress) && locationVoteHome.length <= 4) {
       setLocationVote(prev => [...prev, nameAddress])
     } else if (locationVoteHome.length > 4) {

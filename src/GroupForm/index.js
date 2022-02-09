@@ -94,10 +94,7 @@ function GroupForm() {
   })
   //Xoá địa chỉ
   const onDelete = value => {
-    //  db.child(`location/${value}`).remove();
     console.log(locationVote)
-    // const item = locationVot
-    // const item =[];
     for (let i = 0; i < locationVote.length; i++) {
       if (locationVote[i] === value) {
         locationVote.splice(i, 1)

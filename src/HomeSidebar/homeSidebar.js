@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './homeSidebar.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import ModalForm from '../components/ModalForm'
@@ -13,11 +13,10 @@ import { FaShareAlt, FaCalendarCheck } from 'react-icons/fa'
 import { BsArrowReturnLeft } from 'react-icons/bs'
 import { SiGooglemaps } from 'react-icons/si'
 import { FaCrown } from 'react-icons/fa'
-import axios from 'axios'
 
 const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation }) => {
   const navigate = useNavigate()
-  const { locationVote, setLocationVote, selectedRoomId, setList, setSelectedRoomId, setMember, setViewport } =
+  const { locationVote, setLocationVote, selectedRoomId, setList, setSelectedRoomId, setMember } =
     React.useContext(AppContext)
   const params = useParams()
 
@@ -49,7 +48,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
     setShow2(false)
   }
 
-  /// Lấy ra danh sách địa điểm vote
+  // Lấy ra danh sách địa điểm vote
   const conditionVote = React.useMemo(() => {
     return {
       fieldName: 'room_id',
@@ -57,7 +56,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
       compareValue: params.id
     }
   }, [params.id])
-  //// Kiểm tra host để end Vote
+  // Kiểm tra host để end Vote
   const conditionEndVote = React.useMemo(() => {
     return {
       fieldName: 'user_id',
@@ -65,7 +64,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
       compareValue: uid
     }
   }, [uid])
-  /// Kiểm tra người dùng đã là thành viên hay chưa
+  // Kiểm tra người dùng đã là thành viên hay chưa
   const conditionCheckUser = React.useMemo(() => {
     return {
       fieldName: 'member',
@@ -74,7 +73,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
     }
   }, [uid])
 
-  //// kiểm tra phòng phòng hiện tại
+  // kiểm tra phòng phòng hiện tại
   React.useEffect(() => {
     const { id } = params
     db.collection('rooms')
@@ -100,7 +99,7 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
         }
       })
   }, [params, uid, navigate, selectedRoomId, setSelectedRoomId])
-  //// add địa chỉ đã vote vào data cột locations
+  // add địa chỉ đã vote vào data cột locations
   React.useEffect(() => {
     // console.log(locationVote)
     if (listAdd.length <= 5) {
@@ -118,7 +117,6 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
   }, [locationVote, params.id, uid, setLocationVote, listAdd.length])
 
   const listRoomHost = useGetDataFirebase('rooms', conditionEndVote)
-  const memberInRoom = useGetDataFirebase('rooms', conditionCheckUser)
   const isHost = listRoomHost.find(value => value.id === params.id)
 
   React.useEffect(() => {
@@ -156,7 +154,6 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          // console.log(doc.data())
           setVoteWin(doc.data())
         })
       })
@@ -173,15 +170,10 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
 
   const newListMember = useFirestore('user_room', usersCondition)
   setMember(newListMember)
-  //// Đây là user chứa địa chỉ lúc đầu người dùng nhập
+  // Đây là user chứa địa chỉ lúc đầu người dùng nhập
   React.useCallback(() => {
     setCurrRoom(valueRoom)
   }, [setCurrRoom, valueRoom])
-
-  React.useEffect(() => {
-    const userLogin = listMember.find(member => member?.user_id === uid)
-    // console.log(userLogin)
-  }, [listMember, uid])
 
   const handleEndVote = e => {
     e.preventDefault()
@@ -242,19 +234,16 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
     setFocusLocation(location)
   }
 
-
   return (
     <>
       <div className="home">
         <div className="home-sidebar">
           <h3 className="title">Tiêu đề cuộc bình chọn</h3>
           <div className="home-sidebar-title">
-            {/* <h2>{selectedRoomHost.title ? selectedRoomHost.title : selectedRoomClient.title}</h2> */}
             <h3>{valueRoom.title}</h3>
           </div>
           <h3 className="title">Nội dung cuộc bình chọn</h3>
           <div className="home-sidebar-content">
-            {/* <h2>{selectedRoomHost.description ? selectedRoomHost.description : selectedRoomClient.description}</h2> */}
             <h2>{valueRoom.description}</h2>
           </div>
 
@@ -330,7 +319,9 @@ const HomeSidebar = ({ setCurrRoom, setFocusLocation, listMember, focusLocation 
               show={show}
               onHide={() => setShow(false)}
               ModalTile={''}
-              ModalChildren={<PopupForm value={`https://cungdichoi-772c1.web.app/room-vote/${params.id}`} />}
+              ModalChildren={
+                <PopupForm value={`https://cungdichoi-772c1.web.app/room-vote/${params.id}`} roompass={params.id} />
+              }
               size="md"
             />
           </div>

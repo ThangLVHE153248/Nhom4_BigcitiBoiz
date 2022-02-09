@@ -1,7 +1,7 @@
 import React from 'react'
 import InputForm from './InputForm'
 
-function PopupForm({ value }) {
+function PopupForm({ value, roompass }) {
   const copy = () => {
     const el = document.createElement('input')
     el.value = value
@@ -17,6 +17,9 @@ function PopupForm({ value }) {
       <p className="text_p">
         Hãy sao chép đường liên kết rồi gửi đến những người mà bạn muốn tham gia cùng. Đừng quên lưu lại để có thể sử
         dụng sau.
+      </p>
+      <p style={{ marginTop: '15px' }}>
+        Mã phòng: <strong>{roompass}</strong>
       </p>
       <div className="coppy_input">
         <InputForm type="text" value={value} disabled="disabled" />

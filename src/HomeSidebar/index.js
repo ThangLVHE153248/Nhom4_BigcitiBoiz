@@ -5,13 +5,10 @@ import './homeSidebar.css'
 import LogOut from '../components/LogOut'
 import { useParams } from 'react-router-dom'
 import useFirestore from '../hooks/useFirestore'
-import { AppContext } from '../Context/AppProvider'
-import axios from 'axios'
 function Home() {
   const [currRoom, setCurrRoom] = useState({})
   const [focusLocation, setFocusLocation] = useState()
   const params = useParams()
-  
   const usersCondition = React.useMemo(() => {
     return {
       fieldName: 'room_id',
@@ -32,7 +29,12 @@ function Home() {
     <div className="homeView">
       <LogOut />
       <div className="sidebar">
-        <HomeSidebar setCurrRoom={setCurrRoom} focusLocation={focusLocation} setFocusLocation={setFocusLocation} listMember={listMember} />
+        <HomeSidebar
+          setCurrRoom={setCurrRoom}
+          focusLocation={focusLocation}
+          setFocusLocation={setFocusLocation}
+          listMember={listMember}
+        />
       </div>
       <div className="maps">
         <Mapbox currRoom={currRoom} params={params.id} focusLocation={focusLocation} />

@@ -8,8 +8,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import './style.css'
 import { AppContext } from '../Context/AppProvider'
 
-function Mapbox({ setShow, onClose, value, index }) {
-  console.log(value, index)
+function Mapbox({ onClose, value, index }) {
   const { curraddName, setCurrAddName, setLocationVote, locationVote } = useContext(AppContext)
   // Token
   var token = 'pk.eyJ1IjoiY29udG90IiwiYSI6ImNreWFvamp0dDAwbnIyb210OGdkbjUxc2oifQ.4h9mS6yDTwWeWFpHyJ_6EQ'
@@ -88,9 +87,7 @@ function Mapbox({ setShow, onClose, value, index }) {
 
   var handleSubmitLocation = e => {
     e.preventDefault()
-    console.log(nameAddress)
     setCurrAddName(nameAddress)
-    console.log(curraddName)
 
     const updateLocationVote = [...locationVote]
     updateLocationVote[index] = nameAddress

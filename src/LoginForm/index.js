@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Redirect } from 'react-router-dom'
-import { Container, Row, Col, Button } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 import InputForm from '../components/InputForm'
 import { AuthContext } from '../Context/AuthProvider'
-import { auth, db } from '../firebase/config'
+import { db } from '../firebase/config'
 import { addDocument } from '../firebase/services'
 import Mapbox from './mapbox'
 import ModalForm from '../components/ModalForm'
@@ -17,7 +16,6 @@ import { BsArrowReturnLeft, BsArrowReturnRight } from 'react-icons/bs'
 export default function LoginForm() {
   let navigate = useNavigate()
   const { curraddName, selectedRoomId, setCurrLocation, nickname, setNickName } = useContext(AppContext)
-  const { roomClient } = useContext(AppContext)
 
   const [show, setShow] = useState(false)
 
@@ -44,7 +42,6 @@ export default function LoginForm() {
     onSubmit: values => {
       const { full_name } = values
       setCurrLocation(curraddName)
-      console.log(curraddName)
       setNickName(full_name)
       selectedRoomId ? navigate(`/room-vote/${selectedRoomId}`) : navigate('/create')
       if (selectedRoomId) {
@@ -58,7 +55,6 @@ export default function LoginForm() {
         const clickRoom = db.collection('rooms').doc(selectedRoomId)
         clickRoom.get().then(doc => {
           if (doc.exists) {
-            console.log('Document data:', doc.data())
             const { member, client } = doc.data()
             if (!member.includes(uid)) {
               clickRoom.update({
@@ -69,7 +65,6 @@ export default function LoginForm() {
               return
             }
           } else {
-            // doc.data() will be undefined in this case
             alert('Phòng này không tồn tại')
           }
         })

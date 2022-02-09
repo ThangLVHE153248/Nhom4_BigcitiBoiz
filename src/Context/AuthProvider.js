@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase/config'
 
 export const AuthContext = React.createContext()

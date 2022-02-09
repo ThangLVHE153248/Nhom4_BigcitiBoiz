@@ -7,7 +7,6 @@ import Geocoder from 'react-map-gl-geocoder'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import './style.css'
 import { AppContext } from '../Context/AppProvider'
-import { useNavigate, useParams } from 'react-router-dom'
 
 function MapboxLocationVote({ setShow, onClose }) {
   const { setLocationVote, locationVote } = useContext(AppContext)
@@ -97,7 +96,6 @@ function MapboxLocationVote({ setShow, onClose }) {
     }
     onClose()
   }
-  //
 
   // Return
   return (

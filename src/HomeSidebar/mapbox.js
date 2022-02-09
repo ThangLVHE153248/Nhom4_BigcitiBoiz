@@ -24,13 +24,9 @@ function Mapbox({ focusLocation }) {
     }
   }, [params.id])
 
-  const arrLocationVoteHost = useFirestore('locations', conditionVote)
-
-
   const token = 'pk.eyJ1IjoidHJhbm5oYW4xMiIsImEiOiJja3k5cnd6M2QwOWN4MnZxbWJianJvNTgxIn0.ubgU2PdV-ahm1liOZLyjMw'
   const [newAddress, setNewAddress] = useState([])
   const [newMember, setNewMember] = useState([])
-  const [userCoord, setUserCoord] = useState('')
   const [locationUser, setLocationUser] = useState()
   const [focusLocationCoord, setFocusLocationCoord] = useState('')
   const [distance, setDistance] = useState()
@@ -69,8 +65,6 @@ function Mapbox({ focusLocation }) {
             setNewMember([...newS])
             setSumLong(sumX / Member.length)
             setSumLat(sumY / Member.length)
-
-            console.log("so luong" + Member.length)
           })
           .catch(function (error) {
             console.log(error)
@@ -91,13 +85,7 @@ function Mapbox({ focusLocation }) {
             longitude: response.data.features[0].center[0],
             latitude: response.data.features[0].center[1],
           })
-
-
-
-
           setNewAddress([...newSs])
-
-          // setNewAddress(prev => [...prev, 'ok'])
         })
         .catch(function (error) {
           console.log(error)
@@ -144,7 +132,6 @@ function Mapbox({ focusLocation }) {
     const response = await query.json()
     // Handle errors
     if (response.code !== 'Ok') {
-      console.log(`${response.code} - ${response.message}`)
       return
     }
     // Get the coordinates from the response
@@ -152,7 +139,8 @@ function Mapbox({ focusLocation }) {
     return coords
   }
   const checkdistance = () => {
-    axios.get(`https://api.mapbox.com/directions/v5/mapbox/driving/${focusLocationCoord}.json?access_token=${token}`)
+    axios
+      .get(`https://api.mapbox.com/directions/v5/mapbox/driving/${focusLocationCoord}.json?access_token=${token}`)
       .then(function (responseloca) {
         const distance = responseloca.data.routes[0].distance / 1000
         // alert('khoảng cách'+distance+ "km")
@@ -252,7 +240,6 @@ function Mapbox({ focusLocation }) {
                 </Marker>
               )
             })
-            // }, 1000)
           }
 
           {/* Đây là địa chỉ hiện tại của ngườu dùng */}

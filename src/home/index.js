@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import Carousel from 'react-bootstrap/Carousel'
 import { useNavigate } from 'react-router-dom'
@@ -12,21 +12,12 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import LogOut from '../components/LogOut'
 import { FaVoteYea } from 'react-icons/fa'
-import { AiFillDelete } from 'react-icons/ai'
 
 function Home() {
   const {
-    user: { uid, displayName }
+    user: { uid }
   } = useContext(AuthContext)
-  const {
-    roomClient,
-    roomHost,
-    setSelectedRoomId,
-    selectedRoomHost,
-    selectedRoomClient,
-    setCurrLocation,
-    setCurrAddName
-  } = useContext(AppContext)
+  const { roomClient, roomHost, setSelectedRoomId, setCurrLocation, setCurrAddName } = useContext(AppContext)
   const [hasFocus, setFocus] = useState(false)
 
   const navigate = useNavigate()
@@ -38,52 +29,8 @@ function Home() {
     navigate('/contact')
   }
 
-  db.collection('rooms')
-    .orderBy('createdAt')
-    .where('user_id', '==', '4qh5ZZkhSFVCJm2hInWNuKgNUcA3')
-    .onSnapshot(snapshot => {
-      const documents = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-      }))
-    })
-
-  const conditionHost = React.useMemo(() => {
-    return {
-      fieldName: 'room_id',
-      operator: '==',
-      compareValue: selectedRoomHost.id
-    }
-  }, [selectedRoomHost.id])
-  const conditonUser = React.useMemo(() => {
-    return {
-      fieldName: 'user_id',
-      operator: '==',
-      compareValue: uid
-    }
-  }, [uid])
-
-  const conditionClient = React.useMemo(() => {
-    return {
-      fieldName: 'room_id',
-      operator: '==',
-      compareValue: selectedRoomClient.id
-    }
-  }, [selectedRoomClient.id])
-
-  const currAddHost = useCurrAdd('user_room', conditionHost, conditonUser)
-  const currAddClient = useCurrAdd('user_room', conditionClient, conditonUser)
-
-  // React.useEffect(() => {
-  //   // console.log(currAddHost)
-  // }, [currAddHost])
-  // React.useEffect(() => {
-  //   console.log(currAddClient)
-  // }, [currAddClient])
-
   const handleJoinRoom = value => {
     setSelectedRoomId(value)
-    // localStorage.setItem('roomId', value)
     navigate(`/room-vote/${value}`)
   }
   const formik = useFormik({
@@ -98,7 +45,6 @@ function Home() {
     }),
     onSubmit: values => {
       const clickRoom = db.collection('rooms').doc(values.content)
-      // alert(JSON.stringify(values, null, 2))
       clickRoom.get().then(doc => {
         if (doc.exists) {
           const { member, client } = doc.data()
@@ -116,7 +62,6 @@ function Home() {
 
           navigate(`/contact`)
         } else {
-          // doc.data() will be undefined in this case
           alert('Phòng này không tồn tại')
         }
       })
@@ -131,11 +76,6 @@ function Home() {
     }
   }
 
-  const handleDelete = id => {
-    console.log('Xoá btn')
-  }
-
-  // tabs
   const [currentTab, setCurrentTab] = useState('tab1')
   const tabList = [
     {
